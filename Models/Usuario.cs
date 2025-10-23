@@ -9,11 +9,12 @@ public class Usuario
     public int edad { get; private set; }
     public int idCalendario { get; private set; }
 
-    public Usuario(string nombre, string apellido, string email, int edad, int idCalendario)
+    public Usuario(string nombre, string apellido, string email, string contraseña, int edad, int idCalendario)
     {
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
+        this.contraseña = contraseña;
         this.edad = edad;
         this.idCalendario = idCalendario;
     }
