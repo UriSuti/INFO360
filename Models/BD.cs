@@ -32,7 +32,14 @@ public static class BD
         return registrosAfectados;
     }
 
-    // stored procedure: buscar restricciones
-
-    // stored procedure: 
+    public static string buscarRestricciones(int idUsuario)
+    {
+        string restriccion;
+        using(SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            string storedProcedure = "sp__BuscarRestricciones";
+            restriccion = connection.Query<string>(storedProcedure, new { idUsuario = idUsuario }, commandType: System.Data.CommandType.StoredProcedure).ToString();
+        }
+        return restriccion;
+    }
 }
