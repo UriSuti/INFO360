@@ -15,10 +15,21 @@ public static class BD
         Usuario usu = null;
         using(SqlConnection connection = new SqlConnection(_connectionString))
         {
-            string query = "SELECT nombre, apellido, email, contraseña, edad, idCalendario FROM Usuarios WHERE email = @pEmail AND contraseña = @pContraseña";
+            string query = "SELECT nombre, apellido, email, contraseña, edad FROM Usuarios WHERE email = @pEmail AND contraseña = @pContraseña";
             usu = connection.QueryFirstOrDefault<Usuario>(query, new { pEmail = email, pContraseña = contraseña });
         }
         return usu;
+    }
+
+    public static int buscarIdUsuario(string email, string contraseña)
+    {
+        int id;
+        using(SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            string query = "SELECT id FROM Usuarios WHERE email = @pEmail AND contraseña = @pContraseña";
+            id = connection.QueryFirstOrDefault<int>(query, new { pEmail = email, pContraseña = contraseña });
+        }
+        return id;
     }
 
     public static int eliminarUsuario(string email)
@@ -41,5 +52,65 @@ public static class BD
             restriccion = connection.Query<string>(storedProcedure, new { idUsuario = idUsuario }, commandType: System.Data.CommandType.StoredProcedure).ToString();
         }
         return restriccion;
+    }
+
+    public static void registrarse(Usuario usuario)
+    {
+        string query = "INSERT INTO Usuarios (nombre, apellido, email, contraseña, edad, idCalendario) VALUES (@pNombre, @pApellido, @pEmail, @pContraseña, @pEdad, @pIdCalendario)";
+        using(SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            connection.Execute(query, new { pNombre = usuario.nombre, pApellido = usuario.apellido, pEmail = usuario.email, pContraseña = usuario.contraseña, pEdad = usuario.edad, pIdCalendario = usuario.idCalendario });
+        }
+    }
+
+    public static void agregarCalendario(Calendario calendario)
+    {
+        string query = "INSERT INTO Calendarios (fecha, idUsuario) VALUES (@pFecha, @pIdUsuario)";
+        using(SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            connection.Execute(query, new { pFecha = calendario.fecha, pIdUsuario = calendario.idUsuario });
+        }
+    }
+
+    public static List<Receta> buscarRecetas()
+    {
+        List<Receta> recetas = new List<Receta>();
+        using(SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            string query = "SELECT nombre, descripcion FROM Recetas";
+            recetas = connection.Query<Receta>(query).ToList();
+        }
+        return recetas;
+    }
+
+    public static int buscarIdReceta(Receta receta)
+    {
+        int id;
+        using(SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            string query = "SELECT id FROM Recetas WHERE nombre = @pNombre";
+            id = connection.QueryFirstOrDefault<int>(query, new { pNombre = receta.nombre });
+        }
+        return id;
+    }
+
+    public static int buscarIdCalendario(Calendario calendario)
+    {
+        int id;
+        using(SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            string query = "SELECT id FROM Calendarios WHERE idUsuario = @pIdUsuario AND fecha = @pFecha";
+            id = connection.QueryFirstOrDefault<int>(query, new { pIdUsuario = calendario.idUsuario, pFecha = calendario.fecha });
+        }
+        return id;
+    }
+
+    public static void agregarCalendarioReceta(int idCalendario, int idReceta)
+    {
+        string query = "INSERT INTO CalendariosRecetas (idCalendario, idReceta) VALUES (@pIdCalendario, @pIdReceta)";
+        using(SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            connection.Execute(query, new { pIdCalendario = idCalendario, pIdReceta = idReceta });
+        }
     }
 }
