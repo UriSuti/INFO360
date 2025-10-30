@@ -400,3 +400,43 @@ ul.navbar-nav.mx-auto{
     align-items: center;
   }
 }
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.4em;
+}
+
+.hero-image {
+  width: 100%;
+  height: 180px;
+  background-image: url('/images/comidas.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.titulo {
+  background-color: #F4A300;
+  color: black;
+  font-weight: bold;
+  text-align: center;
+  padding: 8px 0;
+  border-bottom: 2px solid #2b8a3e;
+}
+
+.form-control {
+  border-radius: 0;
+  border-color: #ddd;
+  font-size: 0.9em;
+  margin-bottom: 12px;
+}
+
+.icono-input {
+  position: absolute;
+  right: 15px;
+  top: 9px;
+  color: gray;
+}
+
+.input-group {
+  position: relative;
+}
