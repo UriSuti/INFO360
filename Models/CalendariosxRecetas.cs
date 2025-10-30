@@ -2,11 +2,13 @@ namespace Info360.Models;
 
 public class CalendariosxRecetas
 {
-    public string receta { get; private set; }
+    public Receta receta { get; private set; }
     public DateTime fecha { get; private set; }
-    public CalendariosxRecetas(string receta, DateTime fecha)
+    public string momento { get; private set; }
+    public CalendariosxRecetas(Receta receta, DateTime fecha, string momento)
     {
         this.receta = receta;
         this.fecha = fecha;
+        this.momento = momento;
     }
 }
