@@ -1,14 +1,245 @@
+<style>
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #F5F7F3;
+  color: #1F2A1E;
+}
+
+.mc-main {
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 20px;
+}
+
+/* --- Calendario --- */
+.mc-calendar {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .08);
+  padding: 20px;
+  border: 1px solid #E9ECE6;
+}
+
+.mc-calendar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.mc-calendar__title h2 {
+  margin: 0;
+  font-size: 20px;
+  letter-spacing: .08em;
+}
+
+.mc-calendar__month {
+  display: block;
+  margin-top: 4px;
+  font-size: 14px;
+  color: #6b6b6b;
+}
+
+/* Botón carrito */
+.mc-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background-color: #F7B733;
+  color: #2b2b2b;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .08);
+  transition: transform .2s ease;
+}
+
+.mc-icon-btn:hover {
+  transform: translateY(-1px);
+}
+
+/* --- FullCalendar --- */
+#calendar {
+  --fc-border-color: #E9ECE6;
+  --fc-today-bg-color: rgba(108,165,66,.12);
+  --fc-event-bg-color: #6CA542;
+  --fc-event-border-color: #6CA542;
+  --fc-event-text-color: #fff;
+  --fc-button-bg-color: #6CA542;
+  --fc-button-border-color: #6CA542;
+  --fc-button-text-color: #fff;
+  --fc-button-hover-bg-color: #5b913a;
+}
+
+.fc .fc-toolbar.fc-header-toolbar {
+  display: none;
+}
+
+.fc .fc-col-header-cell-cushion {
+  padding: 10px 0;
+  color: #3e4a3d;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+.fc .fc-daygrid-day {
+  border: 1px solid #E9ECE6;
+  transition: background .15s ease;
+}
+
+.fc .fc-daygrid-day:hover {
+  background: #FAFEF7;
+}
+
+.fc .fc-daygrid-day-number {
+  padding: 8px 10px;
+  font-weight: 600;
+  color: #3b4a33;
+}
+
+.fc .fc-day-today {
+  background: rgba(108,165,66,.12);
+}
+
+/* --- Acordeones --- */
+.mc-meals {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.mc-accordion {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .08);
+  border: 1px solid #E9ECE6;
+  overflow: hidden;
+}
+
+.mc-accordion__summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 18px;
+  cursor: pointer;
+  font-weight: 700;
+  background: linear-gradient(0deg, #ffffff, #fcfef9);
+}
+
+.mc-accordion__summary::-webkit-details-marker { display: none; }
+
+.mc-accordion__chevron {
+  transition: transform .2s;
+}
+
+.mc-accordion[open] .mc-accordion__chevron {
+  transform: rotate(180deg);
+}
+
+.mc-accordion__content {
+  padding: 14px 16px;
+  border-top: 1px solid #E9ECE6;
+  background: #fff;
+}
+
+.mc-recipes {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0 0 12px;
+}
+
+.mc-recipe {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background: #F7FAF2;
+  border-radius: 12px;
+  border: 1px solid #e6eedf;
+}
+
+.mc-recipe__info strong {
+  display: block;
+  font-size: 14px;
+}
+
+.mc-recipe__info small {
+  color: #6b6b6b;
+}
+
+.mc-recipe__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  border: none;
+  border-radius: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.btn-sm {
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+.btn-link {
+  background: transparent;
+  color: #6CA542;
+  font-weight: 600;
+}
+
+.btn-outline-danger {
+  background: transparent;
+  border: 1px solid #d9534f;
+  color: #d9534f;
+}
+
+.btn-success {
+  background: #6CA542;
+  color: #fff;
+}
+
+.btn-outline-danger:hover {
+  background: #d9534f;
+  color: #fff;
+}
+
+.btn-success:hover {
+  filter: brightness(.95);
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.mc-add .btn {
+  font-weight: 700;
+}
+
+
+</style>
+
 <main class="mc-main">
 
-  <!-- CALENDARIO -->
   <section class="mc-calendar card" aria-labelledby="cal-title">
     <header class="mc-calendar__header">
       <div class="mc-calendar__title">
         <h2 id="cal-title">CALENDARIO</h2>
-        <span class="mc-calendar__month">Octubre</span>
+        <span class="mc-calendar__month"></span>
       </div>
 
-      <!-- Botón carrito / lista de compras -->
       <button class="mc-icon-btn mc-icon-btn--accent" title="Lista de compras" aria-label="Lista de compras">
         <svg width="22" height="22" viewBox="0 0 24 24" role="img" aria-hidden="true">
           <path d="M7 6h-2l-1 2h2l3.6 7.59-1.35 2.41A1.994 1.994 0 0 0 10 21h9v-2h-8.42a.25.25 0 0 1-.22-.37L11.1 16H18a2 2 0 0 0 1.8-1.1l3.1-6.2A1 1 0 0 0 22 7H7z"/>
@@ -16,67 +247,10 @@
       </button>
     </header>
 
-    <!-- Tabs: Día / Semana / Mes / Año -->
-    <nav class="mc-tabs" role="tablist" aria-label="Vistas del calendario">
-      <button class="mc-tab" role="tab" aria-selected="false">Día</button>
-      <button class="mc-tab" role="tab" aria-selected="false">Sem</button>
-      <button class="mc-tab is-active" role="tab" aria-selected="true">Mes</button>
-      <button class="mc-tab" role="tab" aria-selected="false">Año</button>
-    </nav>
+    <div id='calendar'></div>
 
-    <!-- Encabezados de días -->
-    <div class="mc-calendar__weekdays">
-      <div class="mc-calendar__weekday">Dom</div>
-      <div class="mc-calendar__weekday">Lun</div>
-      <div class="mc-calendar__weekday">Mar</div>
-      <div class="mc-calendar__weekday">Mie</div>
-      <div class="mc-calendar__weekday">Jue</div>
-      <div class="mc-calendar__weekday">Vie</div>
-      <div class="mc-calendar__weekday">Sab</div>
-    </div>
-
-    <!-- Grilla del mes (ejemplo estático) -->
-    <div class="mc-calendar__grid" role="grid" aria-label="Mes actual">
-      <!-- celdas vacías previas -->
-      <div class="mc-calendar__cell is-empty" aria-hidden="true"></div>
-      <div class="mc-calendar__cell is-empty" aria-hidden="true"></div>
-      <div class="mc-calendar__cell is-empty" aria-hidden="true"></div>
-      <!-- días -->
-      <button class="mc-calendar__cell" role="gridcell">01</button>
-      <button class="mc-calendar__cell">02</button>
-      <button class="mc-calendar__cell">03</button>
-      <button class="mc-calendar__cell">04</button>
-      <button class="mc-calendar__cell">05</button>
-      <button class="mc-calendar__cell">06</button>
-      <button class="mc-calendar__cell">07</button>
-      <button class="mc-calendar__cell">08</button>
-      <button class="mc-calendar__cell">09</button>
-      <button class="mc-calendar__cell">10</button>
-      <button class="mc-calendar__cell">11</button>
-      <button class="mc-calendar__cell is-selected" aria-current="date">12</button>
-      <button class="mc-calendar__cell">13</button>
-      <button class="mc-calendar__cell">14</button>
-      <button class="mc-calendar__cell">15</button>
-      <button class="mc-calendar__cell">16</button>
-      <button class="mc-calendar__cell">17</button>
-      <button class="mc-calendar__cell">18</button>
-      <button class="mc-calendar__cell">19</button>
-      <button class="mc-calendar__cell">20</button>
-      <button class="mc-calendar__cell">21</button>
-      <button class="mc-calendar__cell">22</button>
-      <button class="mc-calendar__cell">23</button>
-      <button class="mc-calendar__cell">24</button>
-      <button class="mc-calendar__cell">25</button>
-      <button class="mc-calendar__cell">26</button>
-      <button class="mc-calendar__cell">27</button>
-      <button class="mc-calendar__cell">28</button>
-      <button class="mc-calendar__cell">29</button>
-      <button class="mc-calendar__cell">30</button>
-      <button class="mc-calendar__cell">31</button>
-    </div>
   </section>
 
-  <!-- ACORDEONES DE COMIDAS -->
   <section class="mc-meals" aria-label="Comidas del día">
     <details class="mc-accordion" open>
       <summary class="mc-accordion__summary">
@@ -91,7 +265,8 @@
               <small>320 kcal • 10 • $3.200</small>
             </div>
             <div class="mc-recipe__actions">
-              <button class="btn btn-link btn-sm">Ver</button>
+
+              <a class="btn btn-link btn-sm" href='@Url.Action("Listado Estudiantes", "Estudiante", new {Curso="4A"))'>Ver</a>
               <button class="btn btn-outline-danger btn-sm">Quitar</button>
             </div>
           </li>
@@ -146,7 +321,7 @@
           <li class="mc-recipe">
             <div class="mc-recipe__info">
               <strong>Yogur con frutos rojos</strong>
-              <small>190 kcal • 5’ • $1.300</small>
+              <small>190 kcal • 5 • $1.300</small>
             </div>
             <div class="mc-recipe__actions">
               <button class="btn btn-link btn-sm">Ver</button>
@@ -170,7 +345,7 @@
           <li class="mc-recipe">
             <div class="mc-recipe__info">
               <strong>Tortilla de verduras</strong>
-              <small>380 kcal • 20’ • $2.700</small>
+              <small>380 kcal • 20 • $2.700</small>
             </div>
             <div class="mc-recipe__actions">
               <button class="btn btn-link btn-sm">Ver</button>
@@ -186,3 +361,53 @@
   </section>
 
 </main>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+  const calendarEl = document.getElementById('calendar');
+  const monthSpan = document.querySelector('.mc-calendar__month');
+
+  const calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    locale: 'es',
+    height: 'auto',
+    contentHeight: 'auto',
+    expandRows: true,
+    dayMaxEventRows: 3,
+    headerToolbar: false,
+    events: [
+      {
+        title: 'Desayuno: Avena con frutas',
+        start: new Date().toISOString().slice(0, 10),
+        color: '#6CA542'
+      },
+      {
+        title: 'Almuerzo: Ensalada quinoa',
+        start: new Date().toISOString().slice(0, 10),
+        color: '#A8D08D'
+      },
+      {
+        title: 'Cena: Tortilla verduras',
+        start: new Date(new Date().setDate(new Date().getDate() + 2)).toISOString().slice(0, 10),
+        color: '#F7B733'
+      }
+    ],
+    datesSet: (info) => {
+      const startDate = info.start;
+      const options = { month: 'long', year: 'numeric' };
+      const formatted = startDate.toLocaleDateString('es-AR', options);
+      monthSpan.textContent = formatted.charAt(0).toUpperCase() + formatted.slice(1);
+    }
+  });
+
+  calendar.render();
+
+  const today = calendar.getDate();
+  const options = { month: 'long', year: 'numeric' };
+  const formatted = today.toLocaleDateString('es-AR', options);
+  monthSpan.textContent = formatted.charAt(0).toUpperCase() + formatted.slice(1);
+});
+
+</script>
+
