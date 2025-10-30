@@ -72,22 +72,22 @@ public static class BD
         }
     }
 
-    public static List<CalendariosxRecetas> buscarCalendariosRecetas(int idUsuario)
-    {
-        List<CalendariosxRecetas> lista = new List<CalendariosxRecetas>();
-        using(SqlConnection connection = new SqlConnection(_connectionString))
-        {
-            string query = "SELECT idUsuario, fecha FROM Calendarios WHERE idUsuario = @pIdUsuario";
-            List<Calendario> calendarios = Connection.Query<Calendario>(query, new { pIdUsuario = idUsuario }).ToList();
-            foreach (Calendario calendario in calendarios)
-            {
-                int idCalendario = buscarIdCalendario(calendario);
-                Receta receta = buscarRecetaDesdeCalendarios(idCalendario);
-                lista.add(new CalendariosxRecetas(receta.nombre, calendario.fecha));
-            }
-        }
-        return lista;
-    }
+    // public static List<CalendariosxRecetas> buscarCalendariosRecetas(int idUsuario)
+    // {
+    //     List<CalendariosxRecetas> lista = new List<CalendariosxRecetas>();
+    //     using(SqlConnection connection = new SqlConnection(_connectionString))
+    //     {
+    //         string query = "SELECT idUsuario, fecha FROM Calendarios WHERE idUsuario = @pIdUsuario";
+    //         List<Calendario> calendarios = connection.Query<Calendario>(query, new { pIdUsuario = idUsuario }).ToList();
+    //         foreach (Calendario calendario in calendarios)
+    //         {
+    //             int idCalendario = buscarIdCalendario(calendario);
+    //             Receta receta = buscarRecetaDesdeCalendarios(idCalendario);
+    //             lista.Add(new CalendariosxRecetas(receta.nombre, calendario.fecha));
+    //         }
+    //     }
+    //     return lista;
+    // }
 
     public static List<Receta> buscarRecetas()
     {
@@ -108,6 +108,7 @@ public static class BD
             string query = "SELECT Recetas.nombre, Recetas.descripcion FROM Recetas INNER JOIN CalendariosRecetas ON Recetas.id = CalendariosRecetas.idReceta INNER JOIN Calendarios ON CalendariosRecetas.idCalendario = @pIdCalendario";
             receta = connection.QueryFirstOrDefault<Receta>(query, new { pIdCalendario = idCalendario });
         }
+        return receta;
     }
 
     public static int buscarIdReceta(Receta receta)

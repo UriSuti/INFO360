@@ -228,10 +228,16 @@
     font-weight: 700;
   }
 
+  #fechaAct{
+    display:none;
+  }
 
 </style>
 
+<p id="fechaAct" disable></p>
+
 <main class="mc-main">
+
 
   <section class="mc-calendar card" aria-labelledby="cal-title">
     <header class="mc-calendar__header">
@@ -252,31 +258,34 @@
   </section>
 
   <section class="mc-meals" aria-label="Comidas del día">
+
+<!-- __________________________________DESAYUNO__________________________________  -->
+
     <details class="mc-accordion" open>
       
-
       <summary class="mc-accordion__summary">
-        <span>DESAYUNO</span>
+        <span>Desayuno</span>
         <span class="mc-accordion__chevron" aria-hidden="true">⌄</span>
       </summary>
-
-
 
       <div class="mc-accordion__content">
         <ul class="mc-recipes">
 
-        @foreach(Receta receta in @ViewBag.recetas){
-          <li class="mc-recipe">
-            <div class="mc-recipe__info">
-              <strong>@receta.</strong>
-              <small>320 kcal • 10 • $3.200</small>
-            </div>
-            <div class="mc-recipe__actions">
+        @foreach(CalendariosxRecetas CalendariosxRecetas in @ViewBag.recetas){
+          @if(CalendariosxRecetas.momento == "desayuno"){
+            <li class="mc-recipe">
+              <div class="mc-recipe__info">
+                <strong>@CalendariosxRecetas.receta.nombre</strong>
+                <small>@CalendariosxRecetas.receta.descripcion</small>
+              </div>
+              <div class="mc-recipe__actions">
 
-              <a class="btn btn-link btn-sm" href='@Url.Action("login")'>Ver</a>
-              <button class="btn btn-outline-danger btn-sm">Quitar</button>
-            </div>
-          </li>
+                <a class="btn btn-link btn-sm" href='@Url.Action("login")'>Ver</a>
+                <button class="btn btn-outline-danger btn-sm">Quitar</button>
+              </div>
+            </li>
+          }
+
         }
         </ul>
         <div class="mc-add">
@@ -284,121 +293,110 @@
         </div>
       </div>
 
+    </details>
 
+<!-- __________________________________Almuerzo__________________________________  -->
+
+
+    <details class="mc-accordion" open>
+      <summary class="mc-accordion__summary">
+        <span>Almuerzo</span>
+        <span class="mc-accordion__chevron" aria-hidden="true">⌄</span>
+      </summary>
+
+      <div class="mc-accordion__content">
+        <ul class="mc-recipes">
+
+        @foreach(CalendariosxRecetas CalendariosxRecetas in @ViewBag.recetas){
+          
+          @if(CalendariosxRecetas.momento == "almuerzo"){
+            <li class="mc-recipe">
+              <div class="mc-recipe__info">
+                <strong>@CalendariosxRecetas.receta.nombre</strong>
+                <small>@CalendariosxRecetas.receta.descripcion</small>
+              </div>
+              <div class="mc-recipe__actions">
+
+                <a class="btn btn-link btn-sm" href='@Url.Action("login")'>Ver</a>
+                <button class="btn btn-outline-danger btn-sm">Quitar</button>
+              </div>
+            </li>
+          }
+
+        }
+        </ul>
+        <div class="mc-add">
+          <button class="btn btn-success w-100">+ Agregar receta</button>
+        </div>
+      </div>
+    </details>
+
+        <details class="mc-accordion" open>
+      <summary class="mc-accordion__summary">
+        <span>Merienda</span>
+        <span class="mc-accordion__chevron" aria-hidden="true">⌄</span>
+      </summary>
+
+      <div class="mc-accordion__content">
+        <ul class="mc-recipes">
+
+        @foreach(CalendariosxRecetas CalendariosxRecetas in @ViewBag.recetas){
+          
+          @if(CalendariosxRecetas.momento == "merienda"){
+            <li class="mc-recipe">
+              <div class="mc-recipe__info">
+                <strong>@CalendariosxRecetas.receta.nombre</strong>
+                <small>@CalendariosxRecetas.receta.descripcion</small>
+              </div>
+              <div class="mc-recipe__actions">
+
+                <a class="btn btn-link btn-sm" href='@Url.Action("login")'>Ver</a>
+                <button class="btn btn-outline-danger btn-sm">Quitar</button>
+              </div>
+            </li>
+          }
+
+        }
+        </ul>
+        <div class="mc-add">
+          <button class="btn btn-success w-100">+ Agregar receta</button>
+        </div>
+      </div>
+    </details>
+
+        <details class="mc-accordion" open>
+      <summary class="mc-accordion__summary">
+        <span>Cena</span>
+        <span class="mc-accordion__chevron" aria-hidden="true">⌄</span>
+      </summary>
+
+      <div class="mc-accordion__content">
+        <ul class="mc-recipes">
+
+        @foreach(CalendariosxRecetas CalendariosxRecetas in @ViewBag.recetas){
+          
+          @if(CalendariosxRecetas.momento == "cena"){
+            <li class="mc-recipe">
+              <div class="mc-recipe__info">
+                <strong>@CalendariosxRecetas.receta.nombre</strong>
+                <small>@CalendariosxRecetas.receta.descripcion</small>
+              </div>
+              <div class="mc-recipe__actions">
+
+                <a class="btn btn-link btn-sm" href='@Url.Action("login")'>Ver</a>
+                <button class="btn btn-outline-danger btn-sm">Quitar</button>
+              </div>
+            </li>
+          }
+
+        }
+        </ul>
+        <div class="mc-add">
+          <button class="btn btn-success w-100">+ Agregar receta</button>
+        </div>
+      </div>
     </details>
   </section>
-<!-- 
-  <section class="mc-meals" aria-label="Comidas del día">
-    <details class="mc-accordion" open>
-    
-      <summary class="mc-accordion__summary">
-        <span>DESAYUNO</span>
-        <span class="mc-accordion__chevron" aria-hidden="true">⌄</span>
-      </summary>
-
-      <div class="mc-accordion__content">
-        <ul class="mc-recipes">
-          <li class="mc-recipe">
-            <div class="mc-recipe__info">
-              <strong>Avena con frutas</strong>
-              <small>320 kcal • 10 • $3.200</small>
-            </div>
-            <div class="mc-recipe__actions">
-
-              <a class="btn btn-link btn-sm" href='@Url.Action("login")'>Ver</a>
-              <button class="btn btn-outline-danger btn-sm">Quitar</button>
-            </div>
-          </li>
-          <li class="mc-recipe">
-            <div class="mc-recipe__info">
-              <strong>Tostadas integrales</strong>
-              <small>250 kcal • 7 • $1.600</small>
-            </div>
-            <div class="mc-recipe__actions">
-              <button class="btn btn-link btn-sm">Ver</button>
-              <button class="btn btn-outline-danger btn-sm">Quitar</button>
-            </div>
-          </li>
-        </ul>
-        <div class="mc-add">
-          <button class="btn btn-success w-100">+ Agregar receta</button>
-        </div>
-      </div>
-    </details>
-
-    <details class="mc-accordion">
-      <summary class="mc-accordion__summary">
-        <span>ALMUERZO</span>
-        <span class="mc-accordion__chevron" aria-hidden="true">⌄</span>
-      </summary>
-
-      <div class="mc-accordion__content">
-        <ul class="mc-recipes">
-          <li class="mc-recipe">
-            <div class="mc-recipe__info">
-              <strong>Ensalada de quinoa</strong>
-              <small>420 kcal • 18 • $4.100</small>
-            </div>
-            <div class="mc-recipe__actions">
-              <button class="btn btn-link btn-sm">Ver</button>
-              <button class="btn btn-outline-danger btn-sm">Quitar</button>
-            </div>
-          </li>
-        </ul>
-        <div class="mc-add">
-          <button class="btn btn-success w-100">+ Agregar receta</button>
-        </div>
-      </div>
-    </details>
-
-    <details class="mc-accordion">
-      <summary class="mc-accordion__summary">
-        <span>MERIENDA</span>
-        <span class="mc-accordion__chevron" aria-hidden="true">⌄</span>
-      </summary>
-      <div class="mc-accordion__content">
-        <ul class="mc-recipes">
-          <li class="mc-recipe">
-            <div class="mc-recipe__info">
-              <strong>Yogur con frutos rojos</strong>
-              <small>190 kcal • 5 • $1.300</small>
-            </div>
-            <div class="mc-recipe__actions">
-              <button class="btn btn-link btn-sm">Ver</button>
-              <button class="btn btn-outline-danger btn-sm">Quitar</button>
-            </div>
-          </li>
-        </ul>
-        <div class="mc-add">
-          <button class="btn btn-success w-100">+ Agregar receta</button>
-        </div>
-      </div>
-    </details>
-
-    <details class="mc-accordion">
-      <summary class="mc-accordion__summary">
-        <span>CENA</span>
-        <span class="mc-accordion__chevron" aria-hidden="true">⌄</span>
-      </summary>
-      <div class="mc-accordion__content">
-        <ul class="mc-recipes">
-          <li class="mc-recipe">
-            <div class="mc-recipe__info">
-              <strong>Tortilla de verduras</strong>
-              <small>380 kcal • 20 • $2.700</small>
-            </div>
-            <div class="mc-recipe__actions">
-              <button class="btn btn-link btn-sm">Ver</button>
-              <button class="btn btn-outline-danger btn-sm">Quitar</button>
-            </div>
-          </li>
-        </ul>
-        <div class="mc-add">
-          <button class="btn btn-success w-100">+ Agregar receta</button>
-        </div>
-      </div>
-    </details>
-  </section> -->
 
 </main>
 
@@ -409,13 +407,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const monthSpan = document.querySelector('.mc-calendar__month');
 
   const calendar = new FullCalendar.Calendar(calendarEl, {
+  dateClick: function(info) {
+
+    const fecha = document.getElementById('fechaAct')
+    var recibido = info.dateStr
+    fecha.innerText = recibido
+  
+  },
     initialView: 'dayGridMonth',
     locale: 'es',
     height: 'auto',
     contentHeight: 'auto',
     expandRows: true,
     dayMaxEventRows: 3,
-    headerToolbar: false,
+    headerToolbar: true,
     events: [
       {
         title: 'Desayuno: Avena con frutas',
