@@ -20,11 +20,11 @@ public class HomeController : Controller
         {
             List<CalendariosxRecetas> lista = new List<CalendariosxRecetas>()
             {
-                new CalendariosxRecetas(new Receta("Ensalada de quinoa", "10cal | 20g proteína | 5g grasas"), new DateTime(2025, 10, 30), "desayuno"),
-                new CalendariosxRecetas(new Receta("Tostadas con queso", "7cal | 9g proteína | 12g grasas"), new DateTime(2025, 10, 31), "merienda"),
-                new CalendariosxRecetas(new Receta("Pollo con papas", "7cal | 9g proteína | 12g grasas"), new DateTime(2025, 10, 31), "almuerzo"),
-                new CalendariosxRecetas(new Receta("Pizza napolitana", "7cal | 9g proteína | 12g grasas"), new DateTime(2025, 10, 31), "cena"),
-                new CalendariosxRecetas(new Receta("Papas fritas", "7cal | 9g proteína | 12g grasas"), new DateTime(2025, 10, 31), "cena")
+                new CalendariosxRecetas(new Receta("Ensalada de quinoa", "Rica en proteínas, con un sabor dulce a nuez."), new DateTime(2025, 10, 30), "desayuno"),
+                new CalendariosxRecetas(new Receta("Tostadas con queso", "Snacks de trigo horneados que tienen una textura crujiente."), new DateTime(2025, 10, 31), "merienda"),
+                new CalendariosxRecetas(new Receta("Pollo con papas", "Pollo al horno con papas fritas, puré u horno, pudiendo ser pata y muslo o pechuga."), new DateTime(2025, 10, 31), "almuerzo"),
+                new CalendariosxRecetas(new Receta("Pizza napolitana", "Masa tierna y delgada pero bordes altos"), new DateTime(2025, 10, 31), "cena"),
+                new CalendariosxRecetas(new Receta("Papas fritas", "Se preparan cortándose en rodajas o en forma de palitos y friéndose en aceite caliente hasta que queden doradas, retirándolas del aceite."), new DateTime(2025, 10, 31), "cena")
             };            
             
             ViewBag.recetas = lista;

@@ -83,7 +83,7 @@ public static class BD
     //         {
     //             int idCalendario = buscarIdCalendario(calendario);
     //             Receta receta = buscarRecetaDesdeCalendarios(idCalendario);
-    //             lista.Add(new CalendariosxRecetas(receta.nombre, calendario.fecha));
+    //             lista.Add(new CalendariosxRecetas(receta, calendario.fecha));
     //         }
     //     }
     //     return lista;
