@@ -1,5 +1,6 @@
 *{
-    transition: 0.5s;
+  transition: 0.5s;
+
 }
 
 .navbar {
@@ -67,15 +68,11 @@ ul.navbar-nav.mx-auto{
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.footer-container:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
 .footer-logo img {
   height: 80px;
   width: auto;
 }
+
 
 .footer-contact h4 {
   font-weight: bold;
@@ -128,6 +125,24 @@ ul.navbar-nav.mx-auto{
   width: 100%;
   max-width: 1100px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.imgHero{
+  background-color: #588b2e;
+}
+
+.imgHero img{
+  width: 100%;
+  height: 600px;
+  box-shadow: 0px 0px 5px 2px;
+
+
+
+}
+
+.imgHero .titulo{
+  border: none;
+
 }
 
 .main-hero:hover {
@@ -272,8 +287,7 @@ ul.navbar-nav.mx-auto{
   display: flex;
   align-items: center;
   border-bottom: 2px solid #ccc;
-  margin-bottom: 1.5rem;
-  padding: 0.3rem;
+  margin-bottom: 12px;
 }
 
 .input-group i {
@@ -371,6 +385,7 @@ ul.navbar-nav.mx-auto{
 }
 
 /* --- RESPONSIVE --- */
+
 @media (min-width: 768px) {
   .hero img {
     height: 400px;
@@ -402,42 +417,18 @@ ul.navbar-nav.mx-auto{
   }
 }
 
-.navbar-brand {
-  font-weight: bold;
-  font-size: 1.4em;
+@media (max-width: 480px) {
+  .imgHero {
+    height: 150px;
+  }
+
+  .imgHero .titulo {
+    font-size: 1.2rem;
+    padding: 6px 20px;
+  }
+
+  form {
+    padding: 20px 15px;
+  }
 }
 
-.hero-image {
-  width: 100%;
-  height: 180px;
-  background-image: url('/images/comidas.jpg');
-  background-size: cover;
-  background-position: center;
-}
-
-.titulo {
-  background-color: #F4A300;
-  color: black;
-  font-weight: bold;
-  text-align: center;
-  padding: 8px 0;
-  border-bottom: 2px solid #2b8a3e;
-}
-
-.form-control {
-  border-radius: 0;
-  border-color: #ddd;
-  font-size: 0.9em;
-  margin-bottom: 12px;
-}
-
-.icono-input {
-  position: absolute;
-  right: 15px;
-  top: 9px;
-  color: gray;
-}
-
-.input-group {
-  position: relative;
-}
