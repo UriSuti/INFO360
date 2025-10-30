@@ -15,21 +15,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        Usuario usuario = Objeto.StringToObject<Usuario>(HttpContext.Session.GetString("Usuario"));
-        if (usuario is null)
-        {
-            return View("Index");
-        }
-        return View("Index2");
-    }
-
-    public IActionResult verCalendario()
-    {
-        Usuario usuario = Objeto.StringToObject<Usuario>(HttpContext.Session.GetString("Usuario"));
-        int idUsuario = BD.buscarIdUsuario(usuario.email, usuario.contraseña);
-        List<CalendariosxRecetas> lista = BD.buscarCalendariosRecetas(idUsuario);
-        ViewBag.lista = lista;
-        return View("");
+        return View("verCalendario");
     }
 
     public IActionResult Registrarse(string nombre, string apellido, string email, string contraseña, int edad)

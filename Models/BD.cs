@@ -72,7 +72,7 @@ public static class BD
             {
                 int idCalendario = buscarIdCalendario(calendario);
                 Receta receta = buscarRecetaDesdeCalendarios(idCalendario);
-                lista.Add(new CalendariosxRecetas(receta, calendario.fecha, calendario.momento));
+                lista.Add(new CalendariosxRecetas(receta, calendario.fecha, "almuerzo"));
             }
         }
         return lista;
