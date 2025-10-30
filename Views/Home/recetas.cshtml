@@ -1,0 +1,231 @@
+<style>
+/* ======== CONTENEDOR PRINCIPAL ======== */
+main {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f7f7f7;
+  padding: 15px;
+}
+
+/* ======== BUSCADOR Y FILTRO ======== */
+.buscador {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.buscador input[type="text"] {
+  width: 90%;
+  border-radius: 25px;
+  border: none;
+  padding: 10px 40px 10px 15px;
+  font-size: 14px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  outline: none;
+  margin-bottom: 10px;
+  transition: 0.3s ease;
+}
+
+.buscador input[type="text"]:focus {
+  box-shadow: 0 3px 10px rgba(108,165,43,0.4);
+}
+
+.buscador button {
+  background-color: #ffffff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.buscador button:hover {
+  background-color: #f8b02a;
+  color: #fff;
+}
+
+/* ======== TARJETAS DE RECETAS ======== */
+.tarjeta {
+  background-color: #ABCA89;
+  border-radius: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  padding: 10px;
+  margin-bottom: 15px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+/* Imagen */
+.tarjeta img {
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* Contenido */
+.tarjeta .contenido {
+  flex: 1;
+}
+
+.tarjeta .contenido p {
+  margin: 2px 0;
+  font-size: 13px;
+  color: #333;
+}
+
+.tarjeta .contenido p span {
+  font-weight: 600;
+  color: #2d2d2d;
+}
+
+/* Texto de autor */
+.tarjeta .autor {
+  font-style: italic;
+  color: #6ca52b;
+  font-weight: 500;
+  margin-top: 5px;
+}
+
+/* ======== ICONOS Y BOTÓN ======== */
+.tarjeta .acciones {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.tarjeta .iconos {
+  display: flex;
+  gap: 8px;
+  font-size: 18px;
+}
+
+.tarjeta .iconos i {
+  cursor: pointer;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.tarjeta .iconos i:hover {
+  transform: scale(1.2);
+  color: #f8b02a;
+}
+
+/* Botón "Agregar" */
+.tarjeta .btn-agregar {
+  background-color: #7a6232;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 6px 14px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.tarjeta .btn-agregar:hover {
+  background-color: #5b4b25;
+}
+
+.recetasExplo {
+  width: 100%;
+
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.h1, h1{
+    font-size: 25px
+}
+
+</style>
+
+<main>
+  <!-- BUSCADOR Y FILTRO -->
+  <div class="buscador">
+    <input type="text" placeholder= "Buscar receta"/>
+    <button><i class="bi bi-funnel"></i> Filtrar</button>
+  </div>
+
+<section class="recetasExplorer">
+
+  <!-- TARJETA 1 -->
+  <div class="tarjeta">
+    <img src="assets/polloteriyaki.jpg" alt="Fideos teriyaki" />
+    <div class="contenido">
+        <h1>Fideos teriyaki</h1>
+      <p><span>Detalles:</span><br>Cal: 195 Kcal | Grasas: 10g | Carbohidratos: 50g</p>
+      <p><span>Info:</span><br>Fideos a la teriyaki con pollo, morrón, pak choi y cebolla.</p>
+      <p class="autor">Receta de: <span>Carolina</span></p>
+      <div class="acciones">
+        <div class="iconos">
+          <i class="bi bi-heart"></i>
+          <i class="bi bi-share"></i>
+        </div>
+        <button class="btn-agregar">Agregar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TARJETA 2 -->
+  <div class="tarjeta">
+    <img src="assets/pizza.jpg" alt="Pizza napolitana" />
+    <div class="contenido">
+        <h1>Pizza napolitana</h1>
+      <p><span>Detalles:</span><br>Cal: 370 Kcal | Grasas: 20g | Carbohidratos: 42g</p>
+      <p><span>Info:</span><br>Pizza napolitana con albahaca fresca y queso parmesano.</p>
+      <p class="autor">Receta de: <span>Salvatore</span></p>
+      <div class="acciones">
+        <div class="iconos">
+          <i class="bi bi-heart"></i>
+          <i class="bi bi-share"></i>
+        </div>
+        <button class="btn-agregar">Agregar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TARJETA 3 -->
+  <div class="tarjeta">
+    <img src="assets/milanesa.jpg" alt="Milanesa al horno" />
+    <div class="contenido">
+        <h1>Milanesa de Carne</h1>
+      <p><span>Detalles:</span><br>Cal: 350 Kcal | Grasas: 15g | Carbohidratos: 50g</p>
+      <p><span>Info:</span><br>Milanesa de carne al horno con papas y cebolla.</p>
+      <p class="autor">Receta de: <span>Gastón</span></p>
+      <div class="acciones">
+        <div class="iconos">
+          <i class="bi bi-heart"></i>
+          <i class="bi bi-share"></i>
+        </div>
+        <button class="btn-agregar">Agregar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TARJETA 4 -->
+  <div class="tarjeta">
+    <img src="assets/papas.jpg" alt="Huevos con papa" />
+    <div class="contenido">
+    <h1>Huevos al horno</h1>
+      <p><span>Detalles:</span><br>Cal: 225 Kcal | Grasas: 14g | Carbohidratos: 17g</p>
+      <p><span>Info:</span><br>Huevos al horno con papa y cebolla.</p>
+      <p class="autor">Receta de: <span>Pauli</span></p>
+      <div class="acciones">
+        <div class="iconos">
+          <i class="bi bi-heart"></i>
+          <i class="bi bi-share"></i>
+        </div>
+        <button class="btn-agregar">Agregar</button>
+      </div>
+    </div>
+  </div>
+</section>
+</main>

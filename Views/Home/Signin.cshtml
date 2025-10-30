@@ -56,7 +56,7 @@ form {
 }
 
 .form-control:focus {
-  border-color: #6ca52b; /* Verde */
+  border-color: #6ca52b; 
   box-shadow: none;
 }
 
@@ -129,13 +129,16 @@ select.form-control {
             <input type="text" class="form-control" placeholder="Apellido" />
             <input type="date" class="form-control" value="" />
 
-            <select class="form-control">
+            <select class="form-control" placeholder="Restricciones">
+                <option disable select> Restricciones</option>
                 <option>Celiaquía</option>
                 <option>Vegano</option>
                 <option>Vegetariano</option>
+                <option>Ninguno</option>
             </select>
 
-            <select class="form-control">
+            <select class="form-control" placeholder="Preferencias">
+                <option disable select> Preferencias</option>
                 <option>Kosher</option>
                 <option>Halal</option>
                 <option>Ninguno</option>
