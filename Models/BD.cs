@@ -72,22 +72,22 @@ public static class BD
         }
     }
 
-    // public static List<CalendariosxRecetas> buscarCalendariosRecetas(int idUsuario)
-    // {
-    //     List<CalendariosxRecetas> lista = new List<CalendariosxRecetas>();
-    //     using(SqlConnection connection = new SqlConnection(_connectionString))
-    //     {
-    //         string query = "SELECT idUsuario, fecha FROM Calendarios WHERE idUsuario = @pIdUsuario";
-    //         List<Calendario> calendarios = connection.Query<Calendario>(query, new { pIdUsuario = idUsuario }).ToList();
-    //         foreach (Calendario calendario in calendarios)
-    //         {
-    //             int idCalendario = buscarIdCalendario(calendario);
-    //             Receta receta = buscarRecetaDesdeCalendarios(idCalendario);
-    //             lista.Add(new CalendariosxRecetas(receta, calendario.fecha));
-    //         }
-    //     }
-    //     return lista;
-    // }
+    public static List<CalendariosxRecetas> buscarCalendariosRecetas(int idUsuario)
+    {
+        List<CalendariosxRecetas> lista = new List<CalendariosxRecetas>();
+        using(SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            string query = "SELECT idUsuario, fecha FROM Calendarios WHERE idUsuario = @pIdUsuario";
+            List<Calendario> calendarios = connection.Query<Calendario>(query, new { pIdUsuario = idUsuario }).ToList();
+            foreach (Calendario calendario in calendarios)
+            {
+                int idCalendario = buscarIdCalendario(calendario);
+                Receta receta = buscarRecetaDesdeCalendarios(idCalendario);
+                lista.Add(new CalendariosxRecetas(receta, calendario.fecha, "almuerzo"));
+            }
+        }
+        return lista;
+    }
 
     public static List<Receta> buscarRecetas()
     {
