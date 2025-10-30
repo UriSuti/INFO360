@@ -1,0 +1,188 @@
+<main class="mc-main">
+
+  <!-- CALENDARIO -->
+  <section class="mc-calendar card" aria-labelledby="cal-title">
+    <header class="mc-calendar__header">
+      <div class="mc-calendar__title">
+        <h2 id="cal-title">CALENDARIO</h2>
+        <span class="mc-calendar__month">Octubre</span>
+      </div>
+
+      <!-- Botón carrito / lista de compras -->
+      <button class="mc-icon-btn mc-icon-btn--accent" title="Lista de compras" aria-label="Lista de compras">
+        <svg width="22" height="22" viewBox="0 0 24 24" role="img" aria-hidden="true">
+          <path d="M7 6h-2l-1 2h2l3.6 7.59-1.35 2.41A1.994 1.994 0 0 0 10 21h9v-2h-8.42a.25.25 0 0 1-.22-.37L11.1 16H18a2 2 0 0 0 1.8-1.1l3.1-6.2A1 1 0 0 0 22 7H7z"/>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Tabs: Día / Semana / Mes / Año -->
+    <nav class="mc-tabs" role="tablist" aria-label="Vistas del calendario">
+      <button class="mc-tab" role="tab" aria-selected="false">Día</button>
+      <button class="mc-tab" role="tab" aria-selected="false">Sem</button>
+      <button class="mc-tab is-active" role="tab" aria-selected="true">Mes</button>
+      <button class="mc-tab" role="tab" aria-selected="false">Año</button>
+    </nav>
+
+    <!-- Encabezados de días -->
+    <div class="mc-calendar__weekdays">
+      <div class="mc-calendar__weekday">Dom</div>
+      <div class="mc-calendar__weekday">Lun</div>
+      <div class="mc-calendar__weekday">Mar</div>
+      <div class="mc-calendar__weekday">Mie</div>
+      <div class="mc-calendar__weekday">Jue</div>
+      <div class="mc-calendar__weekday">Vie</div>
+      <div class="mc-calendar__weekday">Sab</div>
+    </div>
+
+    <!-- Grilla del mes (ejemplo estático) -->
+    <div class="mc-calendar__grid" role="grid" aria-label="Mes actual">
+      <!-- celdas vacías previas -->
+      <div class="mc-calendar__cell is-empty" aria-hidden="true"></div>
+      <div class="mc-calendar__cell is-empty" aria-hidden="true"></div>
+      <div class="mc-calendar__cell is-empty" aria-hidden="true"></div>
+      <!-- días -->
+      <button class="mc-calendar__cell" role="gridcell">01</button>
+      <button class="mc-calendar__cell">02</button>
+      <button class="mc-calendar__cell">03</button>
+      <button class="mc-calendar__cell">04</button>
+      <button class="mc-calendar__cell">05</button>
+      <button class="mc-calendar__cell">06</button>
+      <button class="mc-calendar__cell">07</button>
+      <button class="mc-calendar__cell">08</button>
+      <button class="mc-calendar__cell">09</button>
+      <button class="mc-calendar__cell">10</button>
+      <button class="mc-calendar__cell">11</button>
+      <button class="mc-calendar__cell is-selected" aria-current="date">12</button>
+      <button class="mc-calendar__cell">13</button>
+      <button class="mc-calendar__cell">14</button>
+      <button class="mc-calendar__cell">15</button>
+      <button class="mc-calendar__cell">16</button>
+      <button class="mc-calendar__cell">17</button>
+      <button class="mc-calendar__cell">18</button>
+      <button class="mc-calendar__cell">19</button>
+      <button class="mc-calendar__cell">20</button>
+      <button class="mc-calendar__cell">21</button>
+      <button class="mc-calendar__cell">22</button>
+      <button class="mc-calendar__cell">23</button>
+      <button class="mc-calendar__cell">24</button>
+      <button class="mc-calendar__cell">25</button>
+      <button class="mc-calendar__cell">26</button>
+      <button class="mc-calendar__cell">27</button>
+      <button class="mc-calendar__cell">28</button>
+      <button class="mc-calendar__cell">29</button>
+      <button class="mc-calendar__cell">30</button>
+      <button class="mc-calendar__cell">31</button>
+    </div>
+  </section>
+
+  <!-- ACORDEONES DE COMIDAS -->
+  <section class="mc-meals" aria-label="Comidas del día">
+    <details class="mc-accordion" open>
+      <summary class="mc-accordion__summary">
+        <span>DESAYUNO</span>
+        <span class="mc-accordion__chevron" aria-hidden="true">⌄</span>
+      </summary>
+      <div class="mc-accordion__content">
+        <ul class="mc-recipes">
+          <li class="mc-recipe">
+            <div class="mc-recipe__info">
+              <strong>Avena con frutas</strong>
+              <small>320 kcal • 10 • $3.200</small>
+            </div>
+            <div class="mc-recipe__actions">
+              <button class="btn btn-link btn-sm">Ver</button>
+              <button class="btn btn-outline-danger btn-sm">Quitar</button>
+            </div>
+          </li>
+          <li class="mc-recipe">
+            <div class="mc-recipe__info">
+              <strong>Tostadas integrales</strong>
+              <small>250 kcal • 7 • $1.600</small>
+            </div>
+            <div class="mc-recipe__actions">
+              <button class="btn btn-link btn-sm">Ver</button>
+              <button class="btn btn-outline-danger btn-sm">Quitar</button>
+            </div>
+          </li>
+        </ul>
+        <div class="mc-add">
+          <button class="btn btn-success w-100">+ Agregar receta</button>
+        </div>
+      </div>
+    </details>
+
+    <details class="mc-accordion">
+      <summary class="mc-accordion__summary">
+        <span>ALMUERZO</span>
+        <span class="mc-accordion__chevron" aria-hidden="true">⌄</span>
+      </summary>
+      <div class="mc-accordion__content">
+        <ul class="mc-recipes">
+          <li class="mc-recipe">
+            <div class="mc-recipe__info">
+              <strong>Ensalada de quinoa</strong>
+              <small>420 kcal • 18 • $4.100</small>
+            </div>
+            <div class="mc-recipe__actions">
+              <button class="btn btn-link btn-sm">Ver</button>
+              <button class="btn btn-outline-danger btn-sm">Quitar</button>
+            </div>
+          </li>
+        </ul>
+        <div class="mc-add">
+          <button class="btn btn-success w-100">+ Agregar receta</button>
+        </div>
+      </div>
+    </details>
+
+    <details class="mc-accordion">
+      <summary class="mc-accordion__summary">
+        <span>MERIENDA</span>
+        <span class="mc-accordion__chevron" aria-hidden="true">⌄</span>
+      </summary>
+      <div class="mc-accordion__content">
+        <ul class="mc-recipes">
+          <li class="mc-recipe">
+            <div class="mc-recipe__info">
+              <strong>Yogur con frutos rojos</strong>
+              <small>190 kcal • 5’ • $1.300</small>
+            </div>
+            <div class="mc-recipe__actions">
+              <button class="btn btn-link btn-sm">Ver</button>
+              <button class="btn btn-outline-danger btn-sm">Quitar</button>
+            </div>
+          </li>
+        </ul>
+        <div class="mc-add">
+          <button class="btn btn-success w-100">+ Agregar receta</button>
+        </div>
+      </div>
+    </details>
+
+    <details class="mc-accordion">
+      <summary class="mc-accordion__summary">
+        <span>CENA</span>
+        <span class="mc-accordion__chevron" aria-hidden="true">⌄</span>
+      </summary>
+      <div class="mc-accordion__content">
+        <ul class="mc-recipes">
+          <li class="mc-recipe">
+            <div class="mc-recipe__info">
+              <strong>Tortilla de verduras</strong>
+              <small>380 kcal • 20’ • $2.700</small>
+            </div>
+            <div class="mc-recipe__actions">
+              <button class="btn btn-link btn-sm">Ver</button>
+              <button class="btn btn-outline-danger btn-sm">Quitar</button>
+            </div>
+          </li>
+        </ul>
+        <div class="mc-add">
+          <button class="btn btn-success w-100">+ Agregar receta</button>
+        </div>
+      </div>
+    </details>
+  </section>
+
+</main>
