@@ -1,25 +1,27 @@
-<!-- IMAGEN PRINCIPAL -->
-  <section class="hero">
-    <img src="assets/comida.jpg" alt="Comida saludable">
-    <div class="hero-text">Bienvenido</div>
-  </section>
+@{
+    ViewData["Title"] = "Login";
+}
 
-  <!-- FORMULARIO DE LOGIN -->
-  <main class="login-container">
-    <form class="login-form">
-      <div class="input-group">
-        <i class="bi bi-envelope"></i>
-        <input type="email" placeholder="Email" required>
-      </div>
+<section class="heroLogin">
+  <img src="assets/comida.jpg" alt="Comida saludable">
+  <div class="heroLogin-text">Bienvenido</div>
+</section>
 
-      <div class="input-group">
-        <i class="bi bi-lock"></i>
-        <input type="password" placeholder="Contraseña" required>
-      </div>
+<main class="login-container">
+  <form class="login-form">
+    <div class="input-group">
+      <i class="bi bi-envelope"></i>
+      <input type="email" placeholder="Email" required>
+    </div>
 
-      <button type="submit" class="btn-login">Inicia Sesión</button>
+    <div class="input-group">
+      <i class="bi bi-lock"></i>
+      <input type="password" placeholder="Contraseña" required>
+    </div>
 
-      <p class="register-text">¿No tienes cuenta? <a href="#">Regístrate</a></p>
-    </form>
-  </main>
+    <button type="submit" class="btn-login">Inicia Sesión</button>
+
+    <p class="register-text">¿No tienes cuenta? <a href="#">Regístrate</a></p>
+  </form>
+</main>
 

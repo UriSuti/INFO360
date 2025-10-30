@@ -54,14 +54,14 @@ public static class BD
         return restriccion;
     }
 
-    public static void registrarse(Usuario usuario)
-    {
-        string query = "INSERT INTO Usuarios (nombre, apellido, email, contraseña, edad, idCalendario) VALUES (@pNombre, @pApellido, @pEmail, @pContraseña, @pEdad, @pIdCalendario)";
-        using(SqlConnection connection = new SqlConnection(_connectionString))
-        {
-            connection.Execute(query, new { pNombre = usuario.nombre, pApellido = usuario.apellido, pEmail = usuario.email, pContraseña = usuario.contraseña, pEdad = usuario.edad, pIdCalendario = usuario.idCalendario });
-        }
-    }
+    // public static void registrarse(Usuario usuario)
+    // {
+    //     string query = "INSERT INTO Usuarios (nombre, apellido, email, contraseña, edad, idCalendario) VALUES (@pNombre, @pApellido, @pEmail, @pContraseña, @pEdad, @pIdCalendario)";
+    //     using(SqlConnection connection = new SqlConnection(_connectionString))
+    //     {
+    //         connection.Execute(query, new { pNombre = usuario.nombre, pApellido = usuario.apellido, pEmail = usuario.email, pContraseña = usuario.contraseña, pEdad = usuario.edad, pIdCalendario = usuario.idCalendario });
+    //     }
+    // }
 
     public static void agregarCalendario(Calendario calendario)
     {
