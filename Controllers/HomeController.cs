@@ -31,4 +31,30 @@ public class HomeController : Controller
         ViewBag.lista = lista;
         return View("");
     }
+
+    public IActionResult Registrarse(string nombre, string apellido, string email, string contraseña, int edad)
+    {
+        Usuario usu = new Usuario(nombre, apellido, email, contraseña, edad);
+        BD.registrarse(usu);
+        HttpContext.Session.SetString("Usuario", Objeto.ObjectToString<Usuario>(usu));
+        return View("");
+    }
+
+    public IActionResult Login(string email, string contraseña)
+    {
+        Usuario usuario = BD.buscarUsuario(email, contraseña);
+        HttpContext.Session.SetString("Usuario", Objeto.ObjectToString<Usuario>(usuario));
+        return View("");
+    }
+
+    public IActionResult AgregarCalendarioyReceta(DateTime fecha, string momento, string nombreReceta)
+    {
+        Usuario usuario = Objeto.StringToObject<Usuario>(HttpContext.Session.GetString("Usuario"));
+        int idUsuario = BD.buscarIdUsuario(usuario.email, usuario.contraseña);
+        Calendario calendario = new Calendario(idUsuario, fecha, momento);
+        Receta receta = BD.buscarReceta(nombreReceta);
+        BD.agregarCalendario(calendario);
+        BD.agregarCalendarioReceta(BD.buscarIdCalendario(calendario), BD.buscarIdReceta(receta));
+        return View("");
+    }
 }

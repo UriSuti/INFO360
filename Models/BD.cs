@@ -32,17 +32,6 @@ public static class BD
         return id;
     }
 
-    public static int eliminarUsuario(string email)
-    {
-        string query = "DELETE FROM Usuarios WHERE email = @pEmail";
-        int registrosAfectados = 0;
-        using(SqlConnection connection = new SqlConnection(_connectionString))
-        {
-            registrosAfectados = connection.Execute(query, new { email });
-        }
-        return registrosAfectados;
-    }
-
     public static string buscarRestricciones(int idUsuario)
     {
         string restriccion;
@@ -54,14 +43,14 @@ public static class BD
         return restriccion;
     }
 
-    // public static void registrarse(Usuario usuario)
-    // {
-    //     string query = "INSERT INTO Usuarios (nombre, apellido, email, contraseña, edad, idCalendario) VALUES (@pNombre, @pApellido, @pEmail, @pContraseña, @pEdad, @pIdCalendario)";
-    //     using(SqlConnection connection = new SqlConnection(_connectionString))
-    //     {
-    //         connection.Execute(query, new { pNombre = usuario.nombre, pApellido = usuario.apellido, pEmail = usuario.email, pContraseña = usuario.contraseña, pEdad = usuario.edad, pIdCalendario = usuario.idCalendario });
-    //     }
-    // }
+    public static void registrarse(Usuario usuario)
+    {
+        string query = "INSERT INTO Usuarios (nombre, apellido, email, contraseña, edad, idCalendario) VALUES (@pNombre, @pApellido, @pEmail, @pContraseña, @pEdad)";
+        using(SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            connection.Execute(query, new { pNombre = usuario.nombre, pApellido = usuario.apellido, pEmail = usuario.email, pContraseña = usuario.contraseña, pEdad = usuario.edad });
+        }
+    }
 
     public static void agregarCalendario(Calendario calendario)
     {
@@ -83,7 +72,7 @@ public static class BD
             {
                 int idCalendario = buscarIdCalendario(calendario);
                 Receta receta = buscarRecetaDesdeCalendarios(idCalendario);
-                lista.Add(new CalendariosxRecetas(receta, calendario.fecha, "almuerzo"));
+                lista.Add(new CalendariosxRecetas(receta, calendario.fecha, calendario.momento));
             }
         }
         return lista;
@@ -140,5 +129,16 @@ public static class BD
         {
             connection.Execute(query, new { pIdCalendario = idCalendario, pIdReceta = idReceta });
         }
+    }
+
+    public static Receta buscarReceta(string nombre)
+    {
+        Receta receta;
+        using(SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            string query = "SELECT nombre, descripcion FROM Recetas WHERE nombre = @pNombre";
+            receta = connection.QueryFirstOrDefault<Receta>(query, new { @pNombre = nombre });
+        }
+        return receta;
     }
 }
