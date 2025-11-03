@@ -1,0 +1,155 @@
+<style>
+
+/* ======== SECCIÓN HERO ======== */
+.imgHero {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.imgHero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.8);
+}
+
+.imgHero .titulo {
+  width: 2000px;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f8b02a; 
+  color: #2d2d2d;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 10px 10px 0 0;
+  font-size: 1.4rem;
+  font-family: 'Comic Neue', cursive;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25); /* <- sombra visible */
+  z-index: 2; /* aseguramos que esté por encima */
+
+}
+
+/* ======== FORMULARIO ======== */
+form {
+  background-color: #fff;
+  padding: 25px 20px;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  margin-bottom: 16px;
+}
+
+/* Campos de entrada */
+.form-control {
+  width: 100%;
+  border: none;
+  border-bottom: 1.5px solid #ccc;
+  border-radius: 0;
+  background-color: transparent;
+  margin-bottom: 18px;
+  font-size: 15px;
+  padding: 10px 35px 10px 10px;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #6ca52b; 
+  box-shadow: none;
+}
+
+/* ======== ÍCONOS ======== */
+.input-group {
+  position: relative;
+}
+
+.icono-input {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 18px;
+}
+
+/* ======== SELECTS ======== */
+select.form-control {
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='gray' height='24' viewBox='0 0 24 24' width='24'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 18px;
+  padding-right: 35px;
+}
+
+/* ======== BOTÓN ======== */
+.btn-success {
+  background-color: #7a6232 !important; /* Marrón */
+  border: none;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 10px;
+  transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+  background-color: #5b4b25 !important;
+}
+</style>
+
+<main>
+
+<!-- HERO -->
+    
+<div class="imgHero">
+    <img src="assets/comida.jpg">
+    <div class="titulo">Perfil</div>
+</div>
+    <!-- FORMULARIO -->
+    <div class="container mt-3" style="max-width: 400px;">
+        <form>
+            <div class="input-group">
+                <input type="email" class="form-control" placeholder="ejemplo@gmail.com" />
+                <span class="icono-input"><i class="bi bi-envelope"></i></span>
+            </div>
+
+            <div class="input-group">
+                <input type="password" class="form-control" placeholder="Contraseña" />
+                <span class="icono-input"><i class="bi bi-lock"></i></span>
+            </div>
+
+            <div class="input-group">
+                <input type="password" class="form-control" placeholder="Confirmar contraseña" />
+                <span class="icono-input"><i class="bi bi-lock"></i></span>
+            </div>
+
+            <input type="text" class="form-control" placeholder="Nombre" />
+            <input type="text" class="form-control" placeholder="Apellido" />
+            <input type="date" class="form-control" value="" />
+
+            <select class="form-control" placeholder="Restricciones">
+                <option disable select> Restricciones</option>
+                <option>Celiaquía</option>
+                <option>Vegano</option>
+                <option>Vegetariano</option>
+                <option>Ninguno</option>
+            </select>
+
+            <select class="form-control" placeholder="Preferencias">
+                <option disable select> Preferencias</option>
+                <option>Kosher</option>
+                <option>Halal</option>
+                <option>Ninguno</option>
+            </select>
+
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="img.jpg" />
+                <span class="icono-input"><i class="bi bi-paperclip"></i></span>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100 mt-2">Confirmar</button>
+        </form>
+    </div>
+</main>

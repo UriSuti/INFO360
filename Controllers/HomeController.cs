@@ -15,7 +15,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View("verCalendario");
+        return View("perfil");
     }
 
     public IActionResult Registrarse(string nombre, string apellido, string email, string contraseña, int edad)
