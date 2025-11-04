@@ -15,7 +15,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View("recetas");
+        return View("perfil");
     }
 
     public IActionResult Registrarse(string nombre, string apellido, string email, string contraseña, int edad)
@@ -41,6 +41,9 @@ public class HomeController : Controller
         Receta receta = BD.buscarReceta(nombreReceta);
         BD.agregarCalendario(calendario);
         BD.agregarCalendarioReceta(BD.buscarIdCalendario(calendario), BD.buscarIdReceta(receta));
+        HttpContext.Session.SetString("Usuario", Objeto.ObjectToString<Usuario>(usuario));
+        List<CalendariosxRecetas> calendarios = BD.buscarCalendariosRecetas(idUsuario);
+        ViewBag.Calendarios = calendarios;
         return View("");
     }
 }

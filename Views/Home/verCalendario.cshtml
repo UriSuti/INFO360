@@ -231,6 +231,9 @@
 </style>
 
 <p id="fechaAct" disable></p>
+@{
+    var recetasJson = System.Text.Json.JsonSerializer.Serialize(ViewBag.Recetas);
+}
 
 <main class="mc-main">
 
@@ -400,14 +403,25 @@ document.addEventListener('DOMContentLoaded', () => {
   const calendarEl = document.getElementById('calendar');
   const monthSpan = document.querySelector('.mc-calendar__month');
 
-  const calendar = new FullCalendar.Calendar(calendarEl, {
-  dateClick: function(info) {
+    const recetas = @Html.Raw(recetasJson);
 
-    const fecha = document.getElementById('fechaAct')
-    var recibido = info.dateStr
-    fecha.innerText = recibido
-  
-  },
+    let eventos = recetas.map(r => ({
+    title: `${r.momento.toUpperCase()}: ${r.receta.nombre}`,
+    start: r.fecha.split('T')[0], 
+    color: r.momento === 'desayuno' ? '#6CA542' :
+          r.momento === 'almuerzo' ? '#FFD700' :
+          r.momento === 'cena' ? '#FF6347' : '#888'
+  }));
+
+
+  const calendar = new FullCalendar.Calendar(calendarEl, {
+    dateClick: function(info) {
+
+      const fecha = document.getElementById('fechaAct')
+      var recibido = info.dateStr
+      fecha.innerText = recibido
+
+    },
     initialView: 'dayGridMonth',
     locale: 'es',
     height: 'auto',
@@ -415,23 +429,7 @@ document.addEventListener('DOMContentLoaded', () => {
     expandRows: true,
     dayMaxEventRows: 3,
     headerToolbar: true,
-    events: [
-      {
-        title: 'Desayuno: Avena con frutas',
-        start: new Date().toISOString().slice(0, 10),
-        color: '#6CA542'
-      },
-      {
-        title: 'Almuerzo: Ensalada quinoa',
-        start: new Date().toISOString().slice(0, 10),
-        color: '#A8D08D'
-      },
-      {
-        title: 'Cena: Tortilla verduras',
-        start: new Date(new Date().setDate(new Date().getDate() + 2)).toISOString().slice(0, 10),
-        color: '#F7B733'
-      }
-    ],
+    events: eventos,
     datesSet: (info) => {
       const startDate = info.start;
       const options = { month: 'long', year: 'numeric' };
