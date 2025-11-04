@@ -41,6 +41,9 @@ public class HomeController : Controller
         Receta receta = BD.buscarReceta(nombreReceta);
         BD.agregarCalendario(calendario);
         BD.agregarCalendarioReceta(BD.buscarIdCalendario(calendario), BD.buscarIdReceta(receta));
+        HttpContext.Session.SetString("Usuario", Objeto.ObjectToString<Usuario>(usuario));
+        List<CalendariosxRecetas> calendarios = BD.buscarCalendariosRecetas(idUsuario);
+        ViewBag.Calendarios = calendarios;
         return View("");
     }
 }
