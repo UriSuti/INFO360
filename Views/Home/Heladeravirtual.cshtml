@@ -1,146 +1,147 @@
 <style>
-
-main {
-  font-family: 'Poppins', sans-serif;
-  background-color: #f7f7f7;
-  padding: 15px;
-  position: relative;
-  min-height: 100vh;
+  .heladera-container{
+    width:100%;
+    max-width:550px;
+    margin:auto;
+    padding:18px;
+    font-family:Inter, sans-serif;
 }
 
-
-.buscador {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 15px;
-  background-color: #ffffff;
-  border-radius: 25px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  padding: 5px 10px;
+.titulo{
+    font-size:24px;
+    font-weight:700;
+    margin-bottom:4px;
 }
 
-.buscador input {
-  flex: 1;
-  border: none;
-  outline: none;
-  padding: 10px 10px;
-  font-size: 14px;
-  border-radius: 25px;
+.sub{
+    font-size:14px;
+    opacity:.7;
+    margin-bottom:14px;
 }
 
-.buscador button {
-  border: none;
-  background-color: transparent;
-  color: #6ca52b;
-  font-size: 20px;
-  cursor: pointer;
+.categorias{
+    display:flex;
+    gap:8px;
+    margin-bottom:16px;
+    overflow-x:auto;
 }
 
-.categoria {
-  background-color: #edf5e1;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  margin-bottom: 15px;
-  padding: 10px 15px;
+.cat{
+    padding:6px 12px;
+    background:#eee;
+    border-radius:8px;
+    font-size:14px;
+    cursor:pointer;
+    white-space:nowrap;
 }
 
-.categoria h3 {
-  font-family: 'Comic Neue', cursive;
-  font-size: 16px;
-  color: #4b6f22;
-  text-align: center;
-  margin-bottom: 8px;
-  background-color: #ABCA89;
-  border-radius: 10px 10px 0 0;
-  padding: 3px 0;
-  box-shadow: inset 0 -1px 3px rgba(0,0,0,0.1);
+.cat.active{
+    background:#22b573;
+    color:white;
 }
 
-.categoria ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.items-list{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    margin-bottom:18px;
 }
 
-.categoria li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #ffffff;
-  margin-bottom: 6px;
-  padding: 8px 12px;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+.item{
+    display:flex;
+    justify-content:space-between;
+    background:white;
+    padding:12px;
+    border-radius:8px;
+    border:1px solid #ddd;
 }
 
-.categoria li i {
-  color: #7a6232;
-  cursor: pointer;
-  font-size: 16px;
-  transition: color 0.2s;
+.item-text{
+    font-size:15px;
+    font-weight:500;
 }
 
-.categoria li i:hover {
-  color: #c0392b;
+.del-btn{
+    border:none;
+    background:none;
+    font-size:20px;
+    cursor:pointer;
 }
 
-.btn-flotante {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 25px auto 10px auto;
-  background: none;
-  border: none;
-  color: #2d2d2d;
-  font-size: 40px;
-  cursor: pointer;
-  transition: transform 0.2s ease, color 0.2s ease;
-  margin-left: 92%;
+.add-box{
+    display:flex;
+    gap:8px;
 }
 
-.btn-flotante:hover {
-  transform: scale(1.1);
-  color: #6ca52b;
+.input-add{
+    flex:1;
+    padding:10px;
+    border-radius:8px;
+    border:1px solid #ddd;
 }
 
-
+.btn-add{
+    width:45px;
+    background:#22b573;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-size:22px;
+    cursor:pointer;
+}
 
 </style>
 
-<main>
-  <div class="buscador">
-    <input type="text" placeholder="Buscar ingrediente" />
-    <button><i class="bi bi-arrow-right"></i></button>
-  </div>
+@{
+    ViewData["Title"] = "Heladera Virtual";
+}
 
-  <div class="categoria">
-    <h3>Verduras</h3>
-    <ul>
-      <li>Tomate <i class="bi bi-trash"></i></li>
-      <li>Cebolla Verdeo <i class="bi bi-trash"></i></li>
-    </ul>
-  </div>
+<div class="heladera-container">
 
-  <div class="categoria">
-    <h3>Heladera</h3>
-    <ul>
-      <li>Huevos <i class="bi bi-trash"></i></li>
-      <li>Lomo <i class="bi bi-trash"></i></li>
-      <li>Carne picada <i class="bi bi-trash"></i></li>
-      <li>Morcilla <i class="bi bi-trash"></i></li>
-    </ul>
-  </div>
+    <h2 class="titulo">Heladera Virtual</h2>
+    <p class="sub">Organizá lo que tenés en casa y tachá cuando ya no está más</p>
 
-  <div class="categoria">
-    <h3>Almacén</h3>
-    <ul>
-      <li>Aceite de Oliva <i class="bi bi-trash"></i></li>
-      <li>Arroz <i class="bi bi-trash"></i></li>
-    </ul>
-  </div>
+    <div class="categorias">
+        <span class="cat active" data-cat="Almacen">Almacén</span>
+        <span class="cat" data-cat="Heladera">Heladera</span>
+        <span class="cat" data-cat="Freezer">Freezer</span>
+        <span class="cat" data-cat="Otros">Otros</span>
+    </div>
 
-  <button class="btn-flotante">
-    <i class="bi bi-plus-circle"></i>
-  </button>
-</main>
+    <div class="items-list">
+        @* ACA SE RENDERIZAN ITEMS QUE GUARDEMOS DE BD *@
+        <div class="item">
+            <span class="item-text">Fideos</span>
+            <button class="del-btn">🗑️</button>
+        </div>
+
+        <div class="item">
+            <span class="item-text">Tomates</span>
+            <button class="del-btn">🗑️</button>
+        </div>
+
+        <div class="item">
+            <span class="item-text">Pollo</span>
+            <button class="del-btn">🗑️</button>
+        </div>
+    </div>
+
+    <div class="add-box">
+        <input type="text" placeholder="Agregar producto..." class="input-add" />
+        <button class="btn-add">+</button>
+    </div>
+</div>
+
+<script>
+    const cats = document.querySelectorAll(".cat");
+    cats.forEach(c => c.addEventListener("click", () => {
+        cats.forEach(x => x.classList.remove("active"));
+        c.classList.add("active");
+    }));
+
+    const del = document.querySelectorAll(".del-btn");
+    del.forEach(d => d.addEventListener("click", () => {
+        d.parentNode.remove();
+    }));
+</script>
+
