@@ -270,7 +270,7 @@
         <ul class="mc-recipes">
 
         @foreach(CalendariosxRecetas CalendariosxRecetas in @ViewBag.recetas){
-          @if(CalendariosxRecetas.momento == "desayuno"){
+          @if(CalendariosxRecetas.momento == "desayuno" && CalendariosxRecetas.fecha == ViewBag.Fecha){
             <li class="mc-recipe">
               <div class="mc-recipe__info">
                 <strong>@CalendariosxRecetas.receta.nombre</strong>
@@ -394,6 +394,9 @@
       </div>
     </details>
   </section>
+  <form id="form" method="POST" action='@Url.Action("Index", "Home")' enctype="multipart/form-data">
+    <input type="hidden" id="fechaInput" />
+  </form>
 
 </main>
 
@@ -414,12 +417,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }));
 
 
+
+
   const calendar = new FullCalendar.Calendar(calendarEl, {
     dateClick: function(info) {
 
       const fecha = document.getElementById('fechaAct')
       var recibido = info.dateStr
-      fecha.innerText = recibido
+      document.getElementById("fechaInput").value = recibido
+      document.getElementById('form').submit()
+
 
     },
     initialView: 'dayGridMonth',
