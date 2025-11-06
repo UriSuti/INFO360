@@ -19,19 +19,53 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public IActionResult verCalendario(string fecha)
+    public IActionResult verCalendario(DateTime fecha)
     {
         ViewBag.Fecha = fecha;
+        ViewBag.Recetas = new List<CalendariosxRecetas>()
+        {
+            new CalendariosxRecetas(
+                new Receta("Tostadas integrales con palta", "Desayuno saludable y rápido"),
+                new DateTime(2025, 11, 6),
+                "desayuno"
+            ),
+            new CalendariosxRecetas(
+                new Receta("Ensalada César", "Pollo, lechuga, crutones y aderezo ligero"),
+                new DateTime(2025, 11, 4),
+                "almuerzo"
+            ),
+            new CalendariosxRecetas(
+                new Receta("Sopa de calabaza", "Ideal para una cena liviana y nutritiva"),
+                new DateTime(2025, 11, 4),
+                "cena"
+            ),
+            new CalendariosxRecetas(
+                new Receta("Panqueques de avena", "Rápidos, ricos y con banana"),
+                new DateTime(2025, 11, 5),
+                "desayuno"
+            ),
+            new CalendariosxRecetas(
+                new Receta("Wraps de pollo", "Tortilla integral con vegetales y pollo grillado"),
+                new DateTime(2025, 11, 5),
+                "almuerzo"
+            ),
+            new CalendariosxRecetas(
+                new Receta("Salteado de verduras", "Liviano y lleno de sabor"),
+                new DateTime(2025, 11, 6),
+                "cena"
+            )
+        };
         return View("verCalendario");    
     }
 
     public IActionResult verCalendario()
     {
+        ViewBag.Fecha = DateTime.Today;
         ViewBag.Recetas = new List<CalendariosxRecetas>()
                 {
                     new CalendariosxRecetas(
                         new Receta("Tostadas integrales con palta", "Desayuno saludable y rápido"),
-                        new DateTime(2025, 11, 4),
+                        new DateTime(2025, 11, 6),
                         "desayuno"
                     ),
                     new CalendariosxRecetas(

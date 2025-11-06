@@ -306,7 +306,7 @@
 
         @foreach(CalendariosxRecetas CalendariosxRecetas in @ViewBag.recetas){
           
-          @if(CalendariosxRecetas.momento == "almuerzo"){
+          @if(CalendariosxRecetas.momento == "almuerzo" && CalendariosxRecetas.fecha == ViewBag.Fecha){
             <li class="mc-recipe">
               <div class="mc-recipe__info">
                 <strong>@CalendariosxRecetas.receta.nombre</strong>
@@ -339,7 +339,7 @@
 
         @foreach(CalendariosxRecetas CalendariosxRecetas in @ViewBag.recetas){
           
-          @if(CalendariosxRecetas.momento == "merienda"){
+          @if(CalendariosxRecetas.momento == "merienda" && CalendariosxRecetas.fecha == ViewBag.Fecha){
             <li class="mc-recipe">
               <div class="mc-recipe__info">
                 <strong>@CalendariosxRecetas.receta.nombre</strong>
@@ -372,7 +372,7 @@
 
         @foreach(CalendariosxRecetas CalendariosxRecetas in @ViewBag.recetas){
           
-          @if(CalendariosxRecetas.momento == "cena"){
+          @if(CalendariosxRecetas.momento == "cena" && CalendariosxRecetas.fecha == ViewBag.Fecha){
             <li class="mc-recipe">
               <div class="mc-recipe__info">
                 <strong>@CalendariosxRecetas.receta.nombre</strong>
@@ -394,8 +394,8 @@
       </div>
     </details>
   </section>
-  <form id="form" method="POST" action='@Url.Action("Index", "Home")' enctype="multipart/form-data">
-    <input type="hidden" id="fechaInput" />
+  <form id="form" method="POST" action='@Url.Action("verCalendario", "Home")' enctype="multipart/form-data">
+    <input type="hidden" id="fechaInput" name="fecha" />
   </form>
 
 </main>
