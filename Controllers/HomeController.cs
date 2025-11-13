@@ -97,7 +97,7 @@ public class HomeController : Controller
         return View("verCalendario");
     }
 
-
+    [HttpPost]
     public IActionResult Registrarse(string nombre, string apellido, string email, string contraseña, int edad)
     {
         Usuario usu = new Usuario(nombre, apellido, email, contraseña, edad);
