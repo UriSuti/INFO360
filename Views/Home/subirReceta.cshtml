@@ -1,0 +1,38 @@
+@{
+    ViewData["Title"] = "subirReceta";
+}
+
+    
+    <section class="heroLogin">
+        <img src="assets/comida.jpg" alt="Comida saludable">
+        <div class="heroLogin-text">Nueva receta</div>
+    </section>
+   
+
+    <form class="recipe-form">
+      <label for="titulo">Título</label>
+      <input type="text" id="titulo" name="titulo" placeholder="Título de la receta">
+
+      <label for="resumen">Resumen</label>
+      <input type="text" id="resumen" name="resumen" placeholder="Breve descripción">
+
+      <label for="detalles">Detalles</label>
+      <input type="text" id="detalles" name="detalles" placeholder="Detalles adicionales">
+
+      <label for="ingredientes">Ingredientes</label>
+      <textarea id="ingredientes" name="ingredientes" placeholder="Lista de ingredientes"></textarea>
+
+      <label for="elaboracion">Elaboración</label>
+      <textarea id="elaboracion" name="elaboracion" placeholder="Pasos de elaboración"></textarea>
+
+      <label for="imagen">Imagen</label>
+      <div class="file-input">
+        <input type="file" id="imagen" name="imagen" accept="image/*">
+        <span class="icon">📷</span>
+      </div>
+
+      <button type="submit" class="crear">Crear</button>
+    </form>
+
+  </div>
+

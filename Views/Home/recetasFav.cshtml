@@ -1,0 +1,71 @@
+@{
+    ViewData["Title"] = "recetasFav";
+}
+
+
+
+<div class="contenedor-favoritas">
+
+    
+    <div class="buscador-filtro">
+        <div class="buscar">
+            <input type="text" placeholder="Buscar receta" />
+            <button class="btn-buscar">→</button>
+        </div>
+        <button class="btn-filtro">☰ Filtrar</button>
+    </div>
+
+    
+    <div class="tarjeta-receta">
+        <img src="~/images/fideosTeriyaki.jpg" alt="Fideos a la teriyaki" class="imagen-receta" />
+
+        <div class="contenido-receta">
+            <div class="detalle-info">
+                <p><strong>Detalles:</strong><br>
+                Cal: 150 Kcal<br>
+                Grasas: 50g<br>
+                Carbohidratos: 5g</p>
+
+                <p><strong>Info:</strong><br>
+                Fideos a la teriyaki con choclo, morrón, pollo, pepino y cebolla.</p>
+
+                <p class="autor">Receta de: <a href="#">CarlosFer</a></p>
+            </div>
+
+            <div class="acciones">
+                <button class="btn-corazon activo">❤️</button>
+                <button class="btn-compartir">🔗</button>
+                <button class="btn-guardar">📄</button>
+            </div>
+
+            <button class="btn-leer">Leer</button>
+        </div>
+    </div>
+
+    <div class="tarjeta-receta">
+        <img src="~/images/empanaditas.jpg" alt="Masa filo con papa y cebolla" class="imagen-receta" />
+
+        <div class="contenido-receta">
+            <div class="detalle-info">
+                <p><strong>Detalles:</strong><br>
+                Cal: 225 Kcal<br>
+                Grasas: 400g<br>
+                Carbohidratos: 1g</p>
+
+                <p><strong>Info:</strong><br>
+                Masa filo con papa y cebolla.</p>
+
+                <p class="autor">Receta de: <a href="#">Puolf</a></p>
+            </div>
+
+            <div class="acciones">
+                <button class="btn-corazon activo">❤️</button>
+                <button class="btn-compartir">🔗</button>
+                <button class="btn-guardar">📄</button>
+            </div>
+
+            <button class="btn-leer">Leer</button>
+        </div>
+    </div>
+
+</div>
