@@ -8,15 +8,15 @@
 </section>
 
 <main class="login-container">
-  <form class="login-form">
+  <form id="form" method="POST" action='@Url.Action("Login", "Home")' enctype="multipart/form-data">
     <div class="input-group">
       <i class="bi bi-envelope"></i>
-      <input type="email" placeholder="Email" required>
+      <input type="email" placeholder="Email" name="email" required>
     </div>
 
     <div class="input-group">
       <i class="bi bi-lock"></i>
-      <input type="password" placeholder="Contraseña" required>
+      <input type="password" placeholder="Contraseña" name="contraseña" required>
     </div>
 
     <button type="submit" class="btn-login">Inicia Sesión</button>

@@ -38,7 +38,7 @@
         <ul class="mc-recipes">
 
         @foreach(CalendariosxRecetas CalendariosxRecetas in @ViewBag.recetas){
-          @if(CalendariosxRecetas.momento == "desayuno" && CalendariosxRecetas.fecha == ViewBag.Fecha){
+          @if(CalendariosxRecetas.momento == "Desayuno" && CalendariosxRecetas.fecha == ViewBag.Fecha){
             <li class="mc-recipe">
               <div class="mc-recipe__info">
                 <strong>@CalendariosxRecetas.receta.nombre</strong>
@@ -74,7 +74,7 @@
 
         @foreach(CalendariosxRecetas CalendariosxRecetas in @ViewBag.recetas){
           
-          @if(CalendariosxRecetas.momento == "almuerzo" && CalendariosxRecetas.fecha == ViewBag.Fecha){
+          @if(CalendariosxRecetas.momento == "Almuerzo" && CalendariosxRecetas.fecha == ViewBag.Fecha){
             <li class="mc-recipe">
               <div class="mc-recipe__info">
                 <strong>@CalendariosxRecetas.receta.nombre</strong>
@@ -107,7 +107,7 @@
 
         @foreach(CalendariosxRecetas CalendariosxRecetas in @ViewBag.recetas){
           
-          @if(CalendariosxRecetas.momento == "merienda" && CalendariosxRecetas.fecha == ViewBag.Fecha){
+          @if(CalendariosxRecetas.momento == "Merienda" && CalendariosxRecetas.fecha == ViewBag.Fecha){
             <li class="mc-recipe">
               <div class="mc-recipe__info">
                 <strong>@CalendariosxRecetas.receta.nombre</strong>
@@ -140,7 +140,7 @@
 
         @foreach(CalendariosxRecetas CalendariosxRecetas in @ViewBag.recetas){
           
-          @if(CalendariosxRecetas.momento == "cena" && CalendariosxRecetas.fecha == ViewBag.Fecha){
+          @if(CalendariosxRecetas.momento == "Cena" && CalendariosxRecetas.fecha == ViewBag.Fecha){
             <li class="mc-recipe">
               <div class="mc-recipe__info">
                 <strong>@CalendariosxRecetas.receta.nombre</strong>
@@ -179,9 +179,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let eventos = recetas.map(r => ({
     title: `${r.momento.toUpperCase()}: ${r.receta.nombre}`,
     start: r.fecha.split('T')[0], 
-    color: r.momento === 'desayuno' ? '#6CA542' :
-          r.momento === 'almuerzo' ? '#FFD700' :
-          r.momento === 'cena' ? '#FF6347' : '#888'
+    color: r.momento === 'Desayuno' ? '#6CA542' :
+          r.momento === 'Almuerzo' ? '#FFD700' :
+          r.momento === 'Cena' ? '#FF6347' : '#888'
   }));
 
 
