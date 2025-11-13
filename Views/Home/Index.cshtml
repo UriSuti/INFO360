@@ -1,13 +1,9 @@
-﻿@{
-    ViewData["Title"] = "Index";
-}
-
-  <main class="main-section">
+﻿  <main class="main-section">
 
     <div class="main-hero">
       <img src="assets/comida.jpg" alt="Comida saludable">
       <div class="hero-text">
-        <h2>Comer bien<br><span>nunca fue tan fácil</span></h2>
+        <h2>Comer bien<br><span>nunca fue tan fácil @ViewBag.usuario.nombre</span></h2>
         <button class="btn-login">Iniciar sesión</button>
         <a href="#" class="register-link">Registrarse</a>
       </div>
@@ -19,6 +15,7 @@
         <div class="text">
           <h4>Calendario</h4>
           <p>Organizá tu semana según tu alimentación.</p>
+          <a href='@Url.Action("verCalendario", "Home")'>verCalendario</a>
         </div>
       </div>
 

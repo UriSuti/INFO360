@@ -64,15 +64,17 @@ public static class BD
     public static List<CalendariosxRecetas> buscarCalendariosRecetas(int idUsuario)
     {
         List<CalendariosxRecetas> lista = new List<CalendariosxRecetas>();
+        List<Calendario> calendarios = new List<Calendario>();
+        Receta receta = null;
         using(SqlConnection connection = new SqlConnection(_connectionString))
         {
-            string query = "SELECT idUsuario, fecha FROM Calendarios WHERE idUsuario = @pIdUsuario";
-            List<Calendario> calendarios = connection.Query<Calendario>(query, new { pIdUsuario = idUsuario }).ToList();
+            string query = "SELECT idUsuario, fecha, momento FROM Calendarios WHERE idUsuario = @pIdUsuario";
+            calendarios = connection.Query<Calendario>(query, new { pIdUsuario = idUsuario }).ToList();
             foreach (Calendario calendario in calendarios)
             {
                 int idCalendario = buscarIdCalendario(calendario);
-                Receta receta = buscarRecetaDesdeCalendarios(idCalendario);
-                lista.Add(new CalendariosxRecetas(receta, calendario.fecha, "almuerzo"));
+                receta = buscarRecetaDesdeCalendarios(idCalendario);
+                lista.Add(new CalendariosxRecetas(receta, calendario.fecha, calendario.momento));
             }
         }
         return lista;
