@@ -118,8 +118,8 @@ public static class BD
         int id;
         using(SqlConnection connection = new SqlConnection(_connectionString))
         {
-            string query = "SELECT id FROM Calendarios WHERE idUsuario = @pIdUsuario AND fecha = @pFecha";
-            id = connection.QueryFirstOrDefault<int>(query, new { pIdUsuario = calendario.idUsuario, pFecha = calendario.fecha });
+            string query = "SELECT id FROM Calendarios WHERE idUsuario = @pIdUsuario AND fecha = @pFecha AND momento = @pMomento";
+            id = connection.QueryFirstOrDefault<int>(query, new { pIdUsuario = calendario.idUsuario, pFecha = calendario.fecha, pMomento = calendario.momento });
         }
         return id;
     }
