@@ -15,7 +15,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View("login");
+        return View("agregarIngrediente");
     }
 
     [HttpPost]
