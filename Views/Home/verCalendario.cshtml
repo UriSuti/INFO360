@@ -55,7 +55,7 @@
         }
         </ul>
         <div class="mc-add">
-          <button class="btn btn-success w-100">+ Agregar receta</button>
+          <button href='@Url.Action("login")'' class="btn btn-success w-100">+ Agregar receta</button>
         </div>
       </div>
 
@@ -156,9 +156,14 @@
 
         }
         </ul>
-        <div class="mc-add">
-          <button class="btn btn-success w-100">+ Agregar receta</button>
-        </div>
+        <form id="form" method="POST" action='@Url.Action("AgregarCalendarioyReceta", "Home")' enctype="multipart/form-data">
+          <input type="date" id="fecha" name="fecha" />
+          <input type="text" id="momento" name="momento" />
+          <input type="text" id=""
+          <div class="mc-add">
+            <button class="btn btn-success w-100" type="submit">+ Agregar receta</button>
+          </div>
+        </form>
       </div>
     </details>
   </section>
