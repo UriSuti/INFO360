@@ -85,7 +85,7 @@ public static class BD
         List<Receta> recetas = new List<Receta>();
         using(SqlConnection connection = new SqlConnection(_connectionString))
         {
-            string query = "SELECT nombre, descripcion FROM Recetas";
+            string query = "SELECT nombre, descripcion, urlFoto FROM Recetas";
             recetas = connection.Query<Receta>(query).ToList();
         }
         return recetas;
@@ -96,7 +96,7 @@ public static class BD
         Receta receta;
         using(SqlConnection connection = new SqlConnection(_connectionString))
         {
-            string query = "SELECT Recetas.nombre, Recetas.descripcion FROM Recetas INNER JOIN CalendariosRecetas ON Recetas.id = CalendariosRecetas.idReceta INNER JOIN Calendarios ON CalendariosRecetas.idCalendario = @pIdCalendario";
+            string query = "SELECT Recetas.nombre, Recetas.descripcion, Recetas.urlFoto FROM Recetas INNER JOIN CalendariosRecetas ON Recetas.id = CalendariosRecetas.idReceta INNER JOIN Calendarios ON CalendariosRecetas.idCalendario = @pIdCalendario";
             receta = connection.QueryFirstOrDefault<Receta>(query, new { pIdCalendario = idCalendario });
         }
         return receta;
@@ -138,7 +138,7 @@ public static class BD
         Receta receta;
         using(SqlConnection connection = new SqlConnection(_connectionString))
         {
-            string query = "SELECT nombre, descripcion FROM Recetas WHERE nombre = @pNombre";
+            string query = "SELECT nombre, descripcion, urlFoto FROM Recetas WHERE nombre = @pNombre";
             receta = connection.QueryFirstOrDefault<Receta>(query, new { @pNombre = nombre });
         }
         return receta;
