@@ -16,7 +16,7 @@ public class HomeController : Controller
     public IActionResult Index()
     {
         ViewBag.recetas = BD.buscarRecetas();
-        return View("recetas");
+        return View("InfoReceta");
     }
 
     [HttpPost]
