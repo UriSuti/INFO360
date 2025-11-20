@@ -50,7 +50,13 @@ public class HomeController : Controller
         Usuario usu = new Usuario(nombre, apellido, email, contraseña, edad);
         BD.registrarse(usu);
         HttpContext.Session.SetString("Usuario", Objeto.ObjectToString<Usuario>(usu));
-        return View("");
+        ViewBag.Usuario = usu;
+        return View("Index");
+    }
+
+    public IActionResult Registrarse()
+    {
+        return View("Signin");
     }
     
     [HttpPost]
@@ -73,6 +79,13 @@ public class HomeController : Controller
         return View("recetas");
     }
 
+    public IActionResult Indexx()
+    {
+        Usuario usuario = Objeto.StringToObject<Usuario>(HttpContext.Session.GetString("Usuario"));
+        ViewBag.Usuario = usuario;
+        return View("Index");
+    }
+
 
     public IActionResult AgregarCalendarioyReceta(DateTime fecha, string momento, string nombreReceta)
     {
@@ -86,5 +99,10 @@ public class HomeController : Controller
         List<CalendariosxRecetas> calendarios = BD.buscarCalendariosRecetas(idUsuario);
         ViewBag.Calendarios = calendarios;
         return View("");
+    }
+
+    public IActionResult carrito()
+    {
+        return View("Carrito");
     }
 }

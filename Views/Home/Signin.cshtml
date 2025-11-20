@@ -4,50 +4,25 @@
 
 <main> 
     <div class="imgHero">
-        <img src="assets/comida.jpg">
+        <img src="../assets/comida.jpg">
         <div class="titulo">Registro</div>
     </div>
     
     <div class="container mt-3" style="max-width: 400px;">
-        <form>
+        <form id="form" method="POST" action='@Url.Action("Registrarse", "Home")' enctype="multipart/form-data">
             <div class="input-group">
-                <input type="email" class="form-control" placeholder="ejemplo@gmail.com" />
+                <input type="email" class="form-control" name="email" placeholder="ejemplo@gmail.com" />
                 <span class="icono-input"><i class="bi bi-envelope"></i></span>
             </div>
 
             <div class="input-group">
-                <input type="password" class="form-control" placeholder="Contraseña" />
+                <input type="password" class="form-control" name="contraseña" placeholder="Contraseña" />
                 <span class="icono-input"><i class="bi bi-lock"></i></span>
             </div>
 
-            <div class="input-group">
-                <input type="password" class="form-control" placeholder="Confirmar contraseña" />
-                <span class="icono-input"><i class="bi bi-lock"></i></span>
-            </div>
-
-            <input type="text" class="form-control" placeholder="Nombre" />
-            <input type="text" class="form-control" placeholder="Apellido" />
-            <input type="date" class="form-control" value="" />
-
-            <select class="form-control" placeholder="Restricciones">
-                <option disable select> Restricciones</option>
-                <option>Celiaquía</option>
-                <option>Vegano</option>
-                <option>Vegetariano</option>
-                <option>Ninguno</option>
-            </select>
-
-            <select class="form-control" placeholder="Preferencias">
-                <option disable select> Preferencias</option>
-                <option>Kosher</option>
-                <option>Halal</option>
-                <option>Ninguno</option>
-            </select>
-
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="img.jpg" />
-                <span class="icono-input"><i class="bi bi-paperclip"></i></span>
-            </div>
+            <input type="text" class="form-control" placeholder="Nombre" name="nombre" />
+            <input type="text" class="form-control" placeholder="Apellido" name="apellido" />
+            <input type="number" class="form-control" placeholder="Edad" name="edad" />
 
             <button type="submit" class="btn btn-success w-100 mt-2">Registrarse</button>
         </form>
