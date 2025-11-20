@@ -5,58 +5,21 @@
 <div class="agregar-container">
 
     <div class="search-bar">
-        <input type="text" placeholder="Carne" />
+        <input type="text" placeholder="Buscar" />
         <button class="btn-buscar">→</button>
     </div>
 
     <div class="ingredientes-grid">
-        <div class="ingrediente-card">
-            <img src="~/images/lomo.jpg" alt="Lomo" />
-            <div class="ingrediente-footer">
-                <span>Lomo</span>
-                <button class="btn-add">＋</button>
+        @foreach(Receta receta in ViewBag.recetas)
+        {
+            <div class="ingrediente-card">
+                <img src="@receta.urlFoto" />
+                <div class="ingrediente-footer">
+                    <span>@receta.nombre</span>
+                    <button class="btn-add">＋</button>
+                </div>
             </div>
-        </div>
-
-        <div class="ingrediente-card">
-            <img src="~/images/colita.jpg" alt="Colita de Cuadril" />
-            <div class="ingrediente-footer">
-                <span>Colita de Cuadril</span>
-                <button class="btn-add">＋</button>
-            </div>
-        </div>
-
-        <div class="ingrediente-card">
-            <img src="~/images/entrana.jpg" alt="Entraña" />
-            <div class="ingrediente-footer">
-                <span>Entraña</span>
-                <button class="btn-add">＋</button>
-            </div>
-        </div>
-
-        <div class="ingrediente-card">
-            <img src="~/images/vacio.jpg" alt="Vacío" />
-            <div class="ingrediente-footer">
-                <span>Vacío</span>
-                <button class="btn-add">＋</button>
-            </div>
-        </div>
-
-        <div class="ingrediente-card">
-            <img src="~/images/picada.jpg" alt="Picada premium" />
-            <div class="ingrediente-footer">
-                <span>Picada premium</span>
-                <button class="btn-add">＋</button>
-            </div>
-        </div>
-
-        <div class="ingrediente-card">
-            <img src="~/images/asado.jpg" alt="Asado" />
-            <div class="ingrediente-footer">
-                <span>Asado</span>
-                <button class="btn-add">＋</button>
-            </div>
-        </div>
+        }
     </div>
 
 </div>
