@@ -15,7 +15,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View("login");
+        return RedirectToAction("Registrarse");
     }
 
     public IActionResult agregarIngrediente()
@@ -30,7 +30,7 @@ public class HomeController : Controller
     {
         ViewBag.Fecha = fecha;
         Usuario usuario = Objeto.StringToObject<Usuario>(HttpContext.Session.GetString("Usuario"));
-        int idUsuario = BD.buscarIdUsuario(usuario.email, usuario.contraseña);        
+        int idUsuario = BD.buscarIdUsuario(usuario.email, usuario.contraseña);  
         ViewBag.Recetas = BD.buscarCalendariosRecetas(idUsuario);
 
         return View("verCalendario");    

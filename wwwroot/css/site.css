@@ -155,7 +155,6 @@
     transform: translateY(-2px);
 }
 .heladera-container .btn-add{
-    position: absolute;
     right: 22px;
     bottom: 22px;
     width: 56px;
@@ -647,7 +646,7 @@
     cursor: pointer;
     font-weight: 700;
 }
-.buscador + .filtro,
+.buscador,
 .buscador .filtro{
     max-width: 980px;
     margin: 10px auto;
@@ -670,10 +669,47 @@
     margin: 12px auto 40px;
     display: grid;
     grid-template-columns: 1fr;
-    gap: 16px;
-    padding: 0 6px;
-    box-sizing: border-box;
+    gap: 40px;
+    padding: 2%;
+    background-color: #ABCA89;
+    border-radius: 15px;
+
 }
+.recetasExplorer .tarjeta{
+    width: 100%;
+    padding: 2%;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0px 0px 5px 2px #aaaaaa;
+}
+
+.recetasExplorer .tarjeta img{
+    width: 100%;
+    border-radius: 15px 15px 0px 0px;
+}
+
+.recetasExplorer .tarjeta .contenido{
+    padding: 1%;
+}
+
+.recetasExplorer .tarjeta .contenido button{
+    float: right;
+}
+.btn-agregar{
+    display: block;
+    width: 30%;
+    background: #685634;
+    color: #ffffff;
+    border: none;
+    padding: 12px 14px;
+    border-radius: 28px;
+    font-weight: 800;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 10px 26px rgba(104,86,52,0.14);
+    margin-top: 6px;
+}
+
 
 /* RECETAS FAVORITAS */
 .contenedor-favoritas{
@@ -1483,7 +1519,7 @@ header img:hover{
 /* Responsive: escritorio vs móvil */
 @media (min-width: 992px){
     /* en desktop, dar opción de columna más estrecha si se desea */
-    .heladera-container{ padding: 28px; }
+    .heladera-container{ padding: 28px; box-shadow: 0 10px 24px rgba(102,157,49,0.12);}
 }
 @media (max-width: 767.98px){
     .heladera-container{ margin: 18px; padding: 16px; border-radius: 10px; }
