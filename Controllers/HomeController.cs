@@ -15,8 +15,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        ViewBag.recetas = BD.buscarRecetas();
-        return View("InfoReceta");
+        return View("Login");
     }
 
     [HttpPost]
@@ -55,6 +54,18 @@ public class HomeController : Controller
         ViewBag.Usuario = usuario;
         return View("Index");
     }
+
+    public IActionResult HeladeraVirtual()
+    {
+        return View("Heladeravirtual");
+    }
+
+    public IActionResult Recetas()
+    {
+        ViewBag.recetas = BD.buscarRecetas();
+        return View("recetas");
+    }
+
 
     public IActionResult AgregarCalendarioyReceta(DateTime fecha, string momento, string nombreReceta)
     {

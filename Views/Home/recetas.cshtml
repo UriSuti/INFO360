@@ -13,7 +13,7 @@
     @foreach(Receta receta in @ViewBag.recetas){
       
       <div class="tarjeta">
-        <img src="assets/recetas/@receta.urlFoto" alt="@receta.nombre" />
+        <img src="@receta.urlFoto" />
         <div class="contenido">
           <h1>@receta.nombre</h1>
           <p><span>Descripcion:</span><br> @receta.descripcion</p>
