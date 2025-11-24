@@ -675,6 +675,69 @@
     border-radius: 15px;
 
 }
+
+/* New recipe card layout */
+.receta-card{
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-shadow: 0 8px 24px rgba(102,157,49,0.06);
+    border: 1px solid rgba(0,0,0,0.04);
+}
+.receta-media{
+    width: 100%;
+    height: 170px;
+    background-size: cover;
+    background-position: center;
+}
+.receta-body{
+    padding: 12px 14px;
+    flex: 1 1 auto;
+}
+.receta-body h3{
+    margin: 0 0 8px 0;
+    font-size: 1.05rem;
+    color: #3f2f20;
+}
+.receta-body .descripcion{
+    margin: 0;
+    color: rgba(64,48,34,0.85);
+    font-size: 0.95rem;
+    line-height: 1.35;
+    max-height: 3.6em; /* approx 3 lines */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.receta-actions{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px 16px 14px;
+}
+.receta-actions .btn-icon{
+    background: transparent;
+    border: none;
+    color: #685634;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+.receta-actions .btn-icon:hover{ color: #F6AA1C; transform: translateY(-2px); }
+.receta-actions .btn-agregar{
+    background: #669D31;
+    color: #ffffff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-weight: 700;
+}
+
+@media (max-width: 575.98px){
+    .receta-media{ height: 140px; }
+}
 .recetasExplorer .tarjeta{
     width: 100%;
     padding: 2%;
@@ -1122,6 +1185,88 @@ recipe-form textarea:focus,
 .mc-recipe__actions .btn:focus{
     outline: 3px solid rgba(102,157,49,0.14);
     outline-offset: 3px;
+}
+
+/* Redesigned calendario grid and meal cards */
+.mc-main.mc-grid{
+    max-width: 1300px;
+    margin: 20px auto 48px;
+    display: grid;
+    /* calendar gets more space */
+    grid-template-columns: 2fr 1fr;
+    gap: 28px;
+    padding: 0 18px;
+    align-items: start;
+}
+
+.mc-calendar.card{ min-height: 720px; }
+.mc-calendar--large{ padding: 18px 18px 22px; }
+
+.meals-grid{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+}
+
+.meal-block{
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 12px;
+    box-shadow: 0 8px 22px rgba(102,157,49,0.06);
+    border: 1px solid rgba(102,157,49,0.06);
+}
+
+.meal-title{
+    margin: 0 0 10px 0;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #3f2f20;
+}
+
+.meal-cards{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+}
+
+/* reuse existing .receta-card styles; add small adjustments for calendar context */
+.receta-card{ min-height: 220px; display:flex; flex-direction:column; }
+.receta-media{ height:120px; }
+.receta-body{ padding:10px 12px; }
+.receta-actions{ padding:8px 12px 12px; display:flex; justify-content:space-between; align-items:center; }
+
+.mc-add{ margin-top:10px; }
+
+/* FullCalendar tweaks: larger event badges and toolbar style */
+.fc .fc-daygrid-event{
+    font-size: 0.9rem;
+    padding: 6px 8px;
+    border-radius: 8px;
+    color: #ffffff;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+}
+
+.fc .fc-daygrid-day-number{
+    color:#3f2f20;
+    font-weight:800;
+    font-size:0.98rem;
+}
+
+.fc .fc-toolbar-chunk button{
+    background: #f3f6f0;
+    border: 1px solid rgba(102,157,49,0.06);
+    padding: 6px 10px;
+    border-radius: 8px;
+}
+.fc .fc-toolbar-chunk .fc-button-primary{
+    background: #669D31;
+    color: #fff;
+    border-color: transparent;
+}
+
+@media (max-width: 900px){
+    .mc-main.mc-grid{ grid-template-columns: 1fr; padding: 0 12px; }
+    .mc-calendar.card{ order: -1; }
 }
 
 /* ===========================

@@ -9,21 +9,27 @@
     </section>
    
 
-    <form class="recipe-form">
-      <label for="titulo">Título</label>
-      <input type="text" id="titulo" name="titulo" placeholder="Título de la receta">
+    <form class="recipe-form" method="post" action='@Url.Action("SubirReceta", "Home")' enctype="multipart/form-data">
+      <label for="titulo">Nombre</label>
+      <input type="text" id="titulo" name="titulo" placeholder="Título de la receta" required>
 
-      <label for="resumen">Resumen</label>
-      <input type="text" id="resumen" name="resumen" placeholder="Breve descripción">
+      <label for="resumen">Descripcion</label>
+      <input type="text" id="resumen" name="resumen" placeholder="Breve descripción" required>
 
-      <label for="detalles">Detalles</label>
-      <input type="text" id="detalles" name="detalles" placeholder="Detalles adicionales">
+      <label for="ingredienteSelect">Ingredientes</label>
+      <div style="display:flex; gap:8px; align-items:center; margin-bottom:8px;">
+        <select id="ingredienteSelect" class="form-select" style="flex:1;">
+          <option value="">-- seleccionar ingrediente --</option>
+            @foreach(Ingrediente ing in ViewBag.ingredientes) {
+                <option value="@ing.id">@ing.medida (@String.Format("${0:0.##}", ing.precio))</option>
+            }
+        
+        </select>
+        <button type="button" id="btnAddIngrediente" class="btn-filtrar">Agregar</button>
+      </div>
 
-      <label for="ingredientes">Ingredientes</label>
-      <textarea id="ingredientes" name="ingredientes" placeholder="Lista de ingredientes"></textarea>
-
-      <label for="elaboracion">Elaboración</label>
-      <textarea id="elaboracion" name="elaboracion" placeholder="Pasos de elaboración"></textarea>
+      <ul id="ingredientesList" style="list-style:none; padding:0; margin:0 0 12px 0;"></ul>
+      <input type="hidden" id="ingredientesJson" name="ingredientes" />
 
       <label for="imagen">Imagen</label>
       <div class="file-input">
@@ -33,6 +39,46 @@
 
       <button type="submit" class="crear">Crear</button>
     </form>
+
+<script>
+  (function(){
+    const select = document.getElementById('ingredienteSelect');
+    const btnAdd = document.getElementById('btnAddIngrediente');
+    const list = document.getElementById('ingredientesList');
+    const hidden = document.getElementById('ingredientesJson');
+    const added = [];
+
+    function render(){
+      list.innerHTML = '';
+      added.forEach((id, idx) => {
+        const opt = select.querySelector('option[value="'+id+'"]');
+        const text = opt ? opt.textContent : id;
+        const li = document.createElement('li');
+        li.style.display = 'flex'; li.style.justifyContent = 'space-between'; li.style.alignItems = 'center'; li.style.padding = '6px 8px'; li.style.border = '1px solid rgba(0,0,0,0.06)'; li.style.borderRadius='6px'; li.style.marginBottom='6px';
+        li.innerHTML = '<span>'+text+'</span>';
+        const remove = document.createElement('button');
+        remove.type = 'button'; remove.textContent = 'Quitar'; remove.className = 'btn-filtrar';
+        remove.addEventListener('click', () => { added.splice(idx,1); render(); });
+        li.appendChild(remove);
+        list.appendChild(li);
+      });
+      hidden.value = JSON.stringify(added);
+    }
+
+    btnAdd.addEventListener('click', function(){
+      const v = select.value;
+      if(!v) return;
+      const intV = parseInt(v, 10);
+      if(added.indexOf(intV) === -1){
+        added.push(intV);
+        render();
+      }
+    });
+
+    // initialize hidden
+    render();
+  })();
+</script>
 
   </div>
 

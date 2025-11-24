@@ -1,30 +1,30 @@
 <p id="fechaAct" disable></p>
 @{
-    var recetasJson = System.Text.Json.JsonSerializer.Serialize(ViewBag.Recetas);
+    var recetasJson = System.Text.Json.JsonSerializer.Serialize(ViewBag.Recetas ?? new List<object>());
+    var fechaSeleccionada = ViewBag.Fecha as DateTime?;
+    var fechaStr = fechaSeleccionada.HasValue ? fechaSeleccionada.Value.ToString("yyyy-MM-dd") : string.Empty;
 }
 
-<main class="mc-main">
+<main class="mc-main mc-grid">
 
-
-  <section class="mc-calendar card" aria-labelledby="cal-title">
+  <section class="mc-calendar card mc-calendar--large" aria-labelledby="cal-title">
     <header class="mc-calendar__header">
       <div class="mc-calendar__title">
-        <h2 id="cal-title">CALENDARIO</h2>
+        <h2 id="cal-title">Calendario</h2>
         <span class="mc-calendar__month"></span>
       </div>
-
-      <button class="mc-icon-btn mc-icon-btn--accent" title="Lista de compras" aria-label="Lista de compras">
-        <svg width="22" height="22" viewBox="0 0 24 24" role="img" aria-hidden="true">
-          <path d="M7 6h-2l-1 2h2l3.6 7.59-1.35 2.41A1.994 1.994 0 0 0 10 21h9v-2h-8.42a.25.25 0 0 1-.22-.37L11.1 16H18a2 2 0 0 0 1.8-1.1l3.1-6.2A1 1 0 0 0 22 7H7z"/>
-        </svg>
-      </button>
+      <div class="mc-calendar__controls">
+        <button class="mc-icon-btn" id="cal-prev" title="Anterior">◀</button>
+        <button class="mc-icon-btn" id="cal-today" title="Hoy">Hoy</button>
+        <button class="mc-icon-btn" id="cal-next" title="Siguiente">▶</button>
+      </div>
     </header>
 
-    <div id='calendar'></div>
+    <div id="calendar" class="calendar-wrap"></div>
 
   </section>
 
-  <section class="mc-meals" aria-label="Comidas del día">
+  <aside class="mc-meals" aria-label="Comidas del día">
 
 
     <details class="mc-accordion" open>
@@ -166,7 +166,7 @@
         </form> -->
       </div>
     </details>
-  </section>
+  </aside>
   <form id="form" method="POST" action='@Url.Action("verCalendario", "Home")' enctype="multipart/form-data">
     <input type="hidden" id="fechaInput" name="fecha" />
   </form>
@@ -178,35 +178,41 @@
 document.addEventListener('DOMContentLoaded', () => {
   const calendarEl = document.getElementById('calendar');
   const monthSpan = document.querySelector('.mc-calendar__month');
+  const btnPrev = document.getElementById('cal-prev');
+  const btnNext = document.getElementById('cal-next');
+  const btnToday = document.getElementById('cal-today');
 
-    const recetas = @Html.Raw(recetasJson);
+  const recetas = @Html.Raw(recetasJson);
 
-    let eventos = recetas.map(r => ({
+  const eventos = recetas.map(r => ({
     title: `${r.momento.toUpperCase()}: ${r.receta.nombre}`,
-    start: r.fecha.split('T')[0], 
+    start: (r.fecha || '').split('T')[0],
     color: r.momento === 'Desayuno' ? '#6CA542' :
-          r.momento === 'Almuerzo' ? '#FFD700' :
-          r.momento === 'Cena' ? '#FF6347' : '#888'
+           r.momento === 'Almuerzo' ? '#FFD700' :
+           r.momento === 'Cena' ? '#FF6347' : '#888'
   }));
 
+  // set a responsive height: big on desktop, moderate on mobile
+  const calcHeight = () => Math.max(480, Math.min(920, window.innerHeight - 220));
+
   const calendar = new FullCalendar.Calendar(calendarEl, {
-    dateClick: function(info) {
-
-      const fecha = document.getElementById('fechaAct')
-      var recibido = info.dateStr
-      document.getElementById("fechaInput").value = recibido
-      document.getElementById('form').submit()
-
-
-    },
     initialView: 'dayGridMonth',
     locale: 'es',
-    height: 'auto',
-    contentHeight: 'auto',
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek'
+    },
+    height: calcHeight(),
     expandRows: true,
-    dayMaxEventRows: 3,
-    headerToolbar: true,
+    dayMaxEventRows: 4,
     events: eventos,
+    eventDisplay: 'block',
+    dateClick: function(info) {
+      // submit the selected date to the server
+      document.getElementById("fechaInput").value = info.dateStr;
+      document.getElementById('form').submit();
+    },
     datesSet: (info) => {
       const startDate = info.start;
       const options = { month: 'long', year: 'numeric' };
@@ -217,11 +223,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
   calendar.render();
 
+  // connect our custom prev/today/next buttons to the calendar
+  btnPrev?.addEventListener('click', () => calendar.prev());
+  btnNext?.addEventListener('click', () => calendar.next());
+  btnToday?.addEventListener('click', () => calendar.today());
+
+  // update month label for initial render
   const today = calendar.getDate();
   const options = { month: 'long', year: 'numeric' };
   const formatted = today.toLocaleDateString('es-AR', options);
   monthSpan.textContent = formatted.charAt(0).toUpperCase() + formatted.slice(1);
-});
 
-</script>
+  // responsive: adjust height on resize
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      calendar.setOption('height', calcHeight());
+    }, 120);
+  });
+});
+    </script>
 

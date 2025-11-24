@@ -1,31 +1,183 @@
 @{
-    ViewData["Title"] = "recetas";
+    ViewData["Title"] = "Recetas";
 }
 
-<main>
+<main class="container main-section">
   <div class="buscador">
-    <input type="text" placeholder= "Buscar receta"/>
-    <button><i class="bi bi-funnel"></i> Filtrar</button>
+    <input id="searchReceta" type="text" placeholder="Buscar receta" aria-label="Buscar receta" />
+    <button id="btnFiltrar" class="btn-filtrar" aria-label="Filtrar"><i class="bi bi-funnel"></i> Filtrar</button>
   </div>
 
   <section class="recetasExplorer">
-
-    @foreach(Receta receta in @ViewBag.recetas){
-      
-      <div class="tarjeta">
-        <img src="@receta.urlFoto" />
-        <div class="contenido">
-          <h1>@receta.nombre</h1>
-          <p><span>Descripcion:</span><br> @receta.descripcion</p>
-          <div class="acciones">
-            <div class="iconos">
-              <i class="bi bi-heart"></i>
-              <i class="bi bi-share"></i>
-            </div>
-            <button class="btn-agregar">Agregar</button>
-          </div>
+    <div class="row gx-4 gy-4">
+    @foreach (Receta receta in ViewBag.recetas){
+    <div class="col-12 col-sm-6 col-md-4">
+      <article class="receta-card" role="article" aria-labelledby="receta-@receta.nombre" data-name="@receta.nombre" data-desc="@receta.descripcion" data-has-image="@(string.IsNullOrWhiteSpace(receta.urlFoto) ? "false" : "true")">
+        <div class="receta-media" style="background-image: url('@receta.urlFoto');" aria-hidden="true"></div>
+        <div class="receta-body">
+          <h3 id="receta-@receta.nombre">@receta.nombre</h3>
+          <p class="descripcion">@receta.descripcion</p>
         </div>
-      </div>
+        <div class="receta-actions">
+          <button class="btn-icon" title="Favorita" aria-label="Marcar favorita"><i class="bi bi-heart"></i></button>
+          <button class="btn-icon" title="Compartir" aria-label="Compartir receta"><i class="bi bi-share"></i></button>
+            <!-- Open modal to add recipe to calendar -->
+            <button type="button" class="btn-agregar add-to-calendar" data-name="@receta.nombre">Añadir</button>
+        </div>
+      </article>
+    </div>
     }
+
+    </div>
   </section>
 </main>
+
+  <!-- Hidden form used to submit to AgregarCalendarioyReceta -->
+  <form id="addToCalendarForm" method="post" action='@Url.Action("AgregarCalendarioyReceta", "Home")' style="display:none;">
+      <input type="hidden" name="fecha" id="cal_fecha" />
+      <input type="hidden" name="momento" id="cal_momento" />
+      <input type="hidden" name="nombreReceta" id="cal_nombre" />
+  </form>
+
+  <!-- Simple modal for selecting date and momento -->
+  <div id="calendarModal" class="modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); align-items:center; justify-content:center; z-index:1050;">
+    <div style="background:#fff; padding:18px; border-radius:8px; width:340px; max-width:94%; box-shadow:0 12px 40px rgba(0,0,0,0.25);">
+      <h4 style="margin:0 0 8px 0;">Agregar al calendario</h4>
+      <p id="modalRecetaName" style="margin:0 0 10px 0; color:#444; font-weight:600;"></p>
+      <label style="display:block; margin-bottom:8px;">Fecha: <input id="modalFecha" type="date" style="width:100%; padding:8px; margin-top:6px;" /></label>
+      <label style="display:block; margin-bottom:12px;">Momento:
+        <select id="modalMomento" style="width:100%; padding:8px; margin-top:6px;">
+          <option value="Desayuno">Desayuno</option>
+          <option value="Almuerzo">Almuerzo</option>
+          <option value="Cena">Cena</option>
+        </select>
+      </label>
+      <div style="display:flex; gap:8px; justify-content:flex-end;">
+        <button id="modalCancel" class="btn-filtrar">Cancelar</button>
+        <button id="modalConfirm" class="btn-filtrar" style="background:#669D31; color:#fff;">Agregar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const input = document.getElementById('searchReceta');
+      const btnFiltrar = document.getElementById('btnFiltrar');
+      const filterPanel = document.getElementById('filterPanel');
+      const filterTitleOnly = document.getElementById('filterTitleOnly');
+      const filterWithImage = document.getElementById('filterWithImage');
+      const clearFilters = document.getElementById('clearFilters');
+      const cards = Array.from(document.querySelectorAll('.receta-card'));
+      const resultsCounter = document.createElement('div');
+      resultsCounter.setAttribute('aria-live','polite');
+      resultsCounter.style.marginTop = '8px';
+      resultsCounter.style.fontSize = '0.95rem';
+      const buscador = document.querySelector('.buscador');
+      if(buscador) buscador.parentNode.insertBefore(resultsCounter, buscador.nextSibling);
+
+      // debounce helper
+      function debounce(fn, wait){
+        let t;
+        return function(...args){
+          clearTimeout(t);
+          t = setTimeout(()=>fn.apply(this,args), wait);
+        };
+      }
+
+      function normalize(s){ return (s||'').toString().toLowerCase().trim(); }
+
+      function applyFilters(){
+        const q = normalize(input.value);
+        const titleOnly = filterTitleOnly && filterTitleOnly.checked;
+        const withImage = filterWithImage && filterWithImage.checked;
+        let visible = 0;
+        cards.forEach(card => {
+          const name = normalize(card.dataset.name);
+          const desc = normalize(card.dataset.desc);
+          const hasImage = card.dataset.hasImage === 'true';
+          let match = true;
+          if(q){
+            if(titleOnly) match = name.includes(q);
+            else match = name.includes(q) || desc.includes(q);
+          }
+          if(withImage && !hasImage) match = false;
+          // show/hide the bootstrap column wrapper
+          const col = card.closest('.col-12, .col-sm-6, .col-md-4');
+          if(match){
+            if(col) col.style.display = '';
+            else card.style.display = '';
+            visible++;
+          } else {
+            if(col) col.style.display = 'none';
+            else card.style.display = 'none';
+          }
+        });
+        resultsCounter.textContent = visible + (visible === 1 ? ' receta encontrada' : ' recetas encontradas');
+      }
+
+      const debouncedApply = debounce(applyFilters, 180);
+      if(input) input.addEventListener('input', debouncedApply);
+      if(filterTitleOnly) filterTitleOnly.addEventListener('change', applyFilters);
+      if(filterWithImage) filterWithImage.addEventListener('change', applyFilters);
+      if(clearFilters) clearFilters.addEventListener('click', function(e){ e.preventDefault(); input.value=''; filterTitleOnly.checked=false; filterWithImage.checked=false; applyFilters(); });
+
+      if(btnFiltrar) btnFiltrar.addEventListener('click', function(e){ e.preventDefault(); if(filterPanel.style.display === 'none'){ filterPanel.style.display = 'block'; filterPanel.querySelector('input,button').focus(); } else { filterPanel.style.display = 'none'; } });
+
+    // run once on load to set counter
+    applyFilters();
+
+    // --- Calendar modal handling ---
+    const addButtons = Array.from(document.querySelectorAll('.add-to-calendar'));
+    const calendarModal = document.getElementById('calendarModal');
+    const modalRecetaName = document.getElementById('modalRecetaName');
+    const modalFecha = document.getElementById('modalFecha');
+    const modalMomento = document.getElementById('modalMomento');
+    const modalCancel = document.getElementById('modalCancel');
+    const modalConfirm = document.getElementById('modalConfirm');
+    const addForm = document.getElementById('addToCalendarForm');
+
+    function showModalFor(name){
+      modalRecetaName.textContent = name;
+      // default date = today
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth()+1).padStart(2,'0');
+      const dd = String(today.getDate()).padStart(2,'0');
+      modalFecha.value = `${yyyy}-${mm}-${dd}`;
+      modalMomento.value = 'Almuerzo';
+      calendarModal.style.display = 'flex';
+      modalFecha.focus();
+      // store selected recipe name in data attr of modalConfirm
+      modalConfirm.dataset.name = name;
+    }
+
+    function hideModal(){
+      calendarModal.style.display = 'none';
+      modalConfirm.dataset.name = '';
+    }
+
+    addButtons.forEach(b => b.addEventListener('click', function(e){
+      const name = b.dataset.name || b.getAttribute('data-name') || '';
+      showModalFor(name);
+    }));
+
+    modalCancel.addEventListener('click', function(e){ e.preventDefault(); hideModal(); });
+
+    modalConfirm.addEventListener('click', function(e){
+      e.preventDefault();
+      const name = modalConfirm.dataset.name || '';
+      const fecha = modalFecha.value;
+      const momento = modalMomento.value;
+      if(!name || !fecha || !momento){
+        alert('Por favor completa fecha y momento');
+        return;
+      }
+      // fill hidden form and submit
+      document.getElementById('cal_nombre').value = name;
+      document.getElementById('cal_fecha').value = fecha;
+      document.getElementById('cal_momento').value = momento;
+      hideModal();
+      addForm.submit();
+    });
+    })();
+  </script>

@@ -1,5 +1,7 @@
 using System.Diagnostics;
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Info360.Models;
 
 namespace Info360.Controllers;
@@ -7,10 +9,19 @@ namespace Info360.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly Microsoft.AspNetCore.Hosting.IWebHostEnvironment _env;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, Microsoft.AspNetCore.Hosting.IWebHostEnvironment env)
     {
         _logger = logger;
+        _env = env;
+    }
+
+    private Usuario? GetUsuarioFromSession()
+    {
+        var s = HttpContext.Session.GetString("Usuario");
+        if (string.IsNullOrEmpty(s)) return null;
+        return Objeto.StringToObject<Usuario>(s);
     }
 
     public IActionResult Index()
@@ -25,12 +36,20 @@ public class HomeController : Controller
         return View("agregarIngrediente");
     }
 
+    [HttpGet]
+    public IActionResult SubirReceta()
+    {
+        ViewBag.ingredientes = BD.buscarIngredientes();
+        return View("subirReceta");
+    }
+
     [HttpPost]
     public IActionResult verCalendario(DateTime fecha)
     {
         ViewBag.Fecha = fecha;
-        Usuario usuario = Objeto.StringToObject<Usuario>(HttpContext.Session.GetString("Usuario"));
-        int idUsuario = BD.buscarIdUsuario(usuario.email, usuario.contraseña);  
+        Usuario? usuario = GetUsuarioFromSession();
+        if (usuario == null) return RedirectToAction("Index");
+        int idUsuario = BD.buscarIdUsuario(usuario.email, usuario.contraseña);
         ViewBag.Recetas = BD.buscarCalendariosRecetas(idUsuario);
 
         return View("verCalendario");    
@@ -38,8 +57,9 @@ public class HomeController : Controller
 
     public IActionResult verCalendario()
     {
-        Usuario usuario = Objeto.StringToObject<Usuario>(HttpContext.Session.GetString("Usuario"));
-        int idUsuario = BD.buscarIdUsuario(usuario.email, usuario.contraseña);        
+        Usuario? usuario = GetUsuarioFromSession();
+        if (usuario == null) return RedirectToAction("Index");
+        int idUsuario = BD.buscarIdUsuario(usuario.email, usuario.contraseña);
         ViewBag.Recetas = BD.buscarCalendariosRecetas(idUsuario);
         return View("verCalendario");
     }
@@ -62,7 +82,12 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult Login(string email, string contraseña)
     {
-        Usuario usuario = BD.buscarUsuario(email, contraseña);
+        Usuario? usuario = BD.buscarUsuario(email, contraseña);
+        if (usuario == null)
+        {
+            // login failed - show login again
+            return View("Login");
+        }
         HttpContext.Session.SetString("Usuario", Objeto.ObjectToString<Usuario>(usuario));
         ViewBag.Usuario = usuario;
         return View("Index");
@@ -70,41 +95,51 @@ public class HomeController : Controller
 
     public IActionResult HeladeraVirtual()
     {
-        Usuario usuario = Objeto.StringToObject<Usuario>(HttpContext.Session.GetString("Usuario"));
+        Usuario? usuario = GetUsuarioFromSession();
+        if (usuario == null) return RedirectToAction("Index");
 
         int idUsuario = BD.buscarIdUsuario(usuario.email, usuario.contraseña);
         List<Ingrediente> items = BD.buscarHeladera(idUsuario);
+        ViewBag.ingredientes = BD.buscarIngredientes();
         HttpContext.Session.SetString("Usuario", Objeto.ObjectToString<Usuario>(usuario));
         ViewBag.Heladera = items;
         return View("Heladeravirtual", items);
     }
 
     [HttpPost]
-    [ValidateAntiForgeryToken]
-    public IActionResult AgregarHeladera(string medida, double precio)
+    public IActionResult AgregarHeladera(int? idIngredienteExistente, string? medida, double? precio)
     {
-        Usuario usuario = Objeto.StringToObject<Usuario>(HttpContext.Session.GetString("Usuario"));
-        if (usuario == null)
-        {
-            return RedirectToAction("Index");
-        }
+        Usuario? usuario = GetUsuarioFromSession();
+        if (usuario == null) return RedirectToAction("Index");
 
         int idUsuario = BD.buscarIdUsuario(usuario.email, usuario.contraseña);
-        // Crear ingrediente y asociarlo a la heladera del usuario
-        int idIngrediente = BD.agregarIngredienteReturnId(medida, precio);
-        BD.agregarIngredienteHeladera(idUsuario, idIngrediente);
+
+        int idIngredienteFinal;
+        if (idIngredienteExistente.HasValue && idIngredienteExistente.Value > 0)
+        {
+            // use existing ingredient
+            idIngredienteFinal = idIngredienteExistente.Value;
+        }
+        else
+        {
+            // create new ingredient - require medida and precio
+            if (string.IsNullOrWhiteSpace(medida) || !precio.HasValue)
+            {
+                // invalid submission, redirect back
+                return RedirectToAction("HeladeraVirtual");
+            }
+            idIngredienteFinal = BD.agregarIngredienteReturnId(medida, precio.Value);
+        }
+
+        BD.agregarIngredienteHeladera(idUsuario, idIngredienteFinal);
         return RedirectToAction("HeladeraVirtual");
     }
 
     [HttpPost]
-    [ValidateAntiForgeryToken]
     public IActionResult EliminarHeladera(int idIngrediente)
     {
-        Usuario usuario = Objeto.StringToObject<Usuario>(HttpContext.Session.GetString("Usuario"));
-        if (usuario == null)
-        {
-            return RedirectToAction("Index");
-        }
+        Usuario? usuario = GetUsuarioFromSession();
+        if (usuario == null) return RedirectToAction("Index");
 
         int idUsuario = BD.buscarIdUsuario(usuario.email, usuario.contraseña);
         BD.quitarIngredienteHeladera(idUsuario, idIngrediente);
@@ -115,11 +150,18 @@ public class HomeController : Controller
     {
         ViewBag.recetas = BD.buscarRecetas();
         return View("recetas");
+    }  
+    
+    public IActionResult RecetasFav()
+    {
+        ViewBag.recetas = BD.buscarRecetas();
+        return View("recetas");
     }
 
     public IActionResult Indexx()
     {
-        Usuario usuario = Objeto.StringToObject<Usuario>(HttpContext.Session.GetString("Usuario"));
+        Usuario? usuario = GetUsuarioFromSession();
+        if (usuario == null) return View("Index");
         ViewBag.Usuario = usuario;
         return View("Index");
     }
@@ -127,20 +169,57 @@ public class HomeController : Controller
 
     public IActionResult AgregarCalendarioyReceta(DateTime fecha, string momento, string nombreReceta)
     {
-        Usuario usuario = Objeto.StringToObject<Usuario>(HttpContext.Session.GetString("Usuario"));
+        Usuario? usuario = GetUsuarioFromSession();
+        if (usuario == null) return RedirectToAction("Index");
         int idUsuario = BD.buscarIdUsuario(usuario.email, usuario.contraseña);
         Calendario calendario = new Calendario(idUsuario, fecha, momento);
         Receta receta = BD.buscarReceta(nombreReceta);
         BD.agregarCalendario(calendario);
         BD.agregarCalendarioReceta(BD.buscarIdCalendario(calendario), BD.buscarIdReceta(receta));
         HttpContext.Session.SetString("Usuario", Objeto.ObjectToString<Usuario>(usuario));
-        List<CalendariosxRecetas> calendarios = BD.buscarCalendariosRecetas(idUsuario);
-        ViewBag.Calendarios = calendarios;
-        return View("");
+        return RedirectToAction("verCalendario");
     }
 
     public IActionResult carrito()
     {
         return View("Carrito");
     }
+
+    
+    [HttpPost]
+    public IActionResult SubirReceta(string titulo, string resumen, IFormFile? imagen, string? ingredientes)
+    {
+        // Save uploaded image (if any) and build url
+        string urlFoto = string.Empty;
+        if (imagen != null && imagen.Length > 0)
+        {
+            var uploads = Path.Combine(_env.WebRootPath ?? "wwwroot", "assets", "uploads");
+            if (!Directory.Exists(uploads)) Directory.CreateDirectory(uploads);
+            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imagen.FileName);
+            var filePath = Path.Combine(uploads, fileName);
+            using (var stream = System.IO.File.Create(filePath))
+            {
+                imagen.CopyTo(stream);
+            }
+            urlFoto = "/assets/uploads/" + fileName;
+        }
+
+        int idReceta = BD.agregarReceta(titulo, resumen, urlFoto);
+
+        if (!string.IsNullOrEmpty(ingredientes))
+        {
+            try
+            {
+                var ids = JsonSerializer.Deserialize<List<int>>(ingredientes!);
+                if (ids != null)
+                {
+                    foreach (var id in ids) BD.agregarRecetaIngrediente(idReceta, id);
+                }
+            }
+            catch { /* ignore malformed JSON */ }
+        }
+
+        return RedirectToAction("Recetas");
+    }
+
 }

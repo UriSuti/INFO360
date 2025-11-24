@@ -32,10 +32,36 @@
     </div>
 
     <form method="post" asp-action="AgregarHeladera" asp-controller="Home" class="add-box">
-        <input name="medida" type="text" placeholder="Agregar producto..." class="input-add" required />
-        <input name="precio" type="number" placeholder="Precio" class="input-add input-price" />
+        <label for="selectIngrediente" style="display:none">Elige ingrediente</label>
+        <select id="selectIngrediente" name="idIngredienteExistente" class="input-add">
+            <option value="">-- Elegir ingrediente existente --</option>
+            @foreach(Ingrediente ing in ViewBag.ingredientes) {
+                <option value="@ing.id">@ing.medida (@String.Format("${0:0.##}", ing.precio))</option>
+            }
+            <option value="0">+ Agregar nuevo ingrediente...</option>
+        </select>
+
+        <div id="newIngredientFields" style="display:none; width:100%;">
+            <input name="medida" type="text" placeholder="Nombre / medida (ej: 1 kg arroz)" class="input-add" />
+            <input name="precio" type="number" step="0.01" placeholder="Precio" class="input-add input-price" />
+        </div>
+
         <button type="submit" class="btn-add">+</button>
     </form>
+
+    <script>
+        (function(){
+            const sel = document.getElementById('selectIngrediente');
+            const newFld = document.getElementById('newIngredientFields');
+            sel.addEventListener('change', function(){
+                if (sel.value === '0') {
+                    newFld.style.display = 'block';
+                } else {
+                    newFld.style.display = 'none';
+                }
+            });
+        })();
+    </script>
 </div>
 
 

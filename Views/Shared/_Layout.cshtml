@@ -43,19 +43,16 @@
                 <a class="nav-link" href='@Url.Action("HeladeraVirtual", "Home")'>Heladera virtual</a>
                 </li>
 
-                <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="calendarDropdown" role="button" data-bs-toggle="dropdown">Calendario</a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href='@Url.Action("verCalendario", "Home")'>Semana</a></li>
-                    <li><a class="dropdown-item" href='@Url.Action("verCalendario", "Home")'>Mes</a></li>
-                </ul>
+                <li class="nav-item">
+                <a class="nav-link" href='@Url.Action("VerCalendario", "Home")'>Calendario</a>
                 </li>
 
                 <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="recipesDropdown" role="button" data-bs-toggle="dropdown">Recetas</a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href='@Url.Action("Recetas", "Home")'>Favoritas</a></li>
-                    <li><a class="dropdown-item" href='@Url.Action("Recetas", "Home")'>Nuevas</a></li>
+                    @* <li><a class="dropdown-item" href='@Url.Action("RecetasFav", "Home")'>Favoritas</a></li> *@
+                    <li><a class="dropdown-item" href='@Url.Action("SubirReceta", "Home")'>Subir Receta</a></li>
+                    <li><a class="dropdown-item" href='@Url.Action("Recetas", "Home")'>Ver Recetas</a></li>
                 </ul>
                 </li>
             </ul>

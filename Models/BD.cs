@@ -54,10 +54,10 @@ public static class BD
 
     public static void agregarCalendario(Calendario calendario)
     {
-        string query = "INSERT INTO Calendarios (fecha, idUsuario) VALUES (@pFecha, @pIdUsuario)";
+        string query = "INSERT INTO Calendarios (fecha, momento, idUsuario) VALUES (@pFecha, @pMomento, @pIdUsuario)";
         using(SqlConnection connection = new SqlConnection(_connectionString))
         {
-            connection.Execute(query, new { pFecha = calendario.fecha, pIdUsuario = calendario.idUsuario });
+            connection.Execute(query, new { pFecha = calendario.fecha, pMomento = calendario.momento, pIdUsuario = calendario.idUsuario });
         }
     }
 
@@ -89,6 +89,34 @@ public static class BD
             recetas = connection.Query<Receta>(query).ToList();
         }
         return recetas;
+    }
+
+    public static int agregarReceta(string nombre, string descripcion, string urlFoto)
+    {
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            string query = "INSERT INTO Recetas (nombre, descripcion, urlFoto) VALUES (@pNombre, @pDescripcion, @pUrlFoto); SELECT CAST(SCOPE_IDENTITY() as int);";
+            int id = connection.QuerySingle<int>(query, new { pNombre = nombre, pDescripcion = descripcion, pUrlFoto = urlFoto });
+            return id;
+        }
+    }
+
+    public static List<Ingrediente> buscarIngredientes()
+    {
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            string query = "SELECT id, medida, precio FROM Ingredientes";
+            return connection.Query<Ingrediente>(query).ToList();
+        }
+    }
+
+    public static void agregarRecetaIngrediente(int idReceta, int idIngrediente)
+    {
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            string query = "INSERT INTO RecetasIngredientes (idReceta, idIngrediente) VALUES (@pIdReceta, @pIdIngrediente);";
+            connection.Execute(query, new { pIdReceta = idReceta, pIdIngrediente = idIngrediente });
+        }
     }
 
     public static Receta buscarRecetaDesdeCalendarios(int idCalendario)
