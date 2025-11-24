@@ -1,3 +1,6 @@
+@model IEnumerable<Info360.Models.Ingrediente>
+
+@using System.Linq
 @{
     ViewData["Title"] = "Heladera Virtual";
 }
@@ -15,26 +18,24 @@
     </div>
 
     <div class="items-list">
-        <div class="item">
-            <span class="item-text">Fideos</span>
-            <button class="del-btn">🗑️</button>
-        </div>
-
-        <div class="item">
-            <span class="item-text">Tomates</span>
-            <button class="del-btn">🗑️</button>
-        </div>
-
-        <div class="item">
-            <span class="item-text">Pollo</span>
-            <button class="del-btn">🗑️</button>
-        </div>
+            @foreach (Ingrediente ingrediente in ViewBag.Heladera)
+            {
+                <div class="item" data-id="@ingrediente.id">
+                    <span class="item-text">@ingrediente.medida</span>
+                    <span class="precio">$@ingrediente.precio</span>
+                    <form method="post" asp-action="EliminarHeladera" asp-controller="Home" class="del-form">
+                        <input type="hidden" name="idIngrediente" value="@ingrediente.id" />
+                        <button type="submit" class="del-btn">🗑️</button>
+                    </form>
+                </div>
+            }
     </div>
 
-    <div class="add-box">
-        <input type="text" placeholder="Agregar producto..." class="input-add" />
-        <button class="btn-add">+</button>
-    </div>
+    <form method="post" asp-action="AgregarHeladera" asp-controller="Home" class="add-box">
+        <input name="medida" type="text" placeholder="Agregar producto..." class="input-add" required />
+        <input name="precio" type="number" placeholder="Precio" class="input-add input-price" />
+        <button type="submit" class="btn-add">+</button>
+    </form>
 </div>
 
 

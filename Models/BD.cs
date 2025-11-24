@@ -8,7 +8,7 @@ namespace Info360.Models;
 
 public static class BD
 {
-    private static string _connectionString = @"Server=localhost;DataBase=Info360;Integrated Security=True;TrustServerCertificate=True;";
+    private static string _connectionString = @"Server=localhost\SQLEXPRESS;DataBase=Info360;Integrated Security=True;TrustServerCertificate=True;";
 
     public static Usuario buscarUsuario(string email, string contraseña)
     {
@@ -142,5 +142,47 @@ public static class BD
             receta = connection.QueryFirstOrDefault<Receta>(query, new { @pNombre = nombre });
         }
         return receta;
+    }
+
+    public static List<Ingrediente> buscarHeladera(int idUsuario)
+    {
+        List<Ingrediente> ingredientes = new List<Ingrediente>();
+        using(SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            string query = @"SELECT i.id, i.medida, i.precio
+                                FROM Ingredientes i
+                                INNER JOIN Heladeras h ON i.id = h.idIngrediente
+                                WHERE h.idUsuario = @pIdUsuario";
+            ingredientes = connection.Query<Ingrediente>(query, new { pIdUsuario = idUsuario }).ToList();
+        }
+        return ingredientes;
+    }
+
+    public static int agregarIngredienteReturnId(string medida, double precio)
+    {
+        using(SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            string query = "INSERT INTO Ingredientes (medida, precio) VALUES (@pMedida, @pPrecio); SELECT CAST(SCOPE_IDENTITY() as int);";
+            int id = connection.QuerySingle<int>(query, new { pMedida = medida, pPrecio = precio });
+            return id;
+        }
+    }
+
+    public static void agregarIngredienteHeladera(int idUsuario, int idIngrediente)
+    {
+        using(SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            string query = "INSERT INTO Heladeras (idUsuario, idIngrediente) VALUES (@pIdUsuario, @pIdIngrediente)";
+            connection.Execute(query, new { pIdUsuario = idUsuario, pIdIngrediente = idIngrediente });
+        }
+    }
+
+    public static void quitarIngredienteHeladera(int idUsuario, int idIngrediente)
+    {
+        using(SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            string query = "DELETE FROM Heladeras WHERE idUsuario = @pIdUsuario AND idIngrediente = @pIdIngrediente";
+            connection.Execute(query, new { pIdUsuario = idUsuario, pIdIngrediente = idIngrediente });
+        }
     }
 }

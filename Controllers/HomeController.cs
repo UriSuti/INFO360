@@ -15,7 +15,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return RedirectToAction("Registrarse");
+        return View("Login");
     }
 
     public IActionResult agregarIngrediente()
@@ -70,7 +70,45 @@ public class HomeController : Controller
 
     public IActionResult HeladeraVirtual()
     {
-        return View("Heladeravirtual");
+        Usuario usuario = Objeto.StringToObject<Usuario>(HttpContext.Session.GetString("Usuario"));
+
+        int idUsuario = BD.buscarIdUsuario(usuario.email, usuario.contraseña);
+        List<Ingrediente> items = BD.buscarHeladera(idUsuario);
+        HttpContext.Session.SetString("Usuario", Objeto.ObjectToString<Usuario>(usuario));
+        ViewBag.Heladera = items;
+        return View("Heladeravirtual", items);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult AgregarHeladera(string medida, double precio)
+    {
+        Usuario usuario = Objeto.StringToObject<Usuario>(HttpContext.Session.GetString("Usuario"));
+        if (usuario == null)
+        {
+            return RedirectToAction("Index");
+        }
+
+        int idUsuario = BD.buscarIdUsuario(usuario.email, usuario.contraseña);
+        // Crear ingrediente y asociarlo a la heladera del usuario
+        int idIngrediente = BD.agregarIngredienteReturnId(medida, precio);
+        BD.agregarIngredienteHeladera(idUsuario, idIngrediente);
+        return RedirectToAction("HeladeraVirtual");
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult EliminarHeladera(int idIngrediente)
+    {
+        Usuario usuario = Objeto.StringToObject<Usuario>(HttpContext.Session.GetString("Usuario"));
+        if (usuario == null)
+        {
+            return RedirectToAction("Index");
+        }
+
+        int idUsuario = BD.buscarIdUsuario(usuario.email, usuario.contraseña);
+        BD.quitarIngredienteHeladera(idUsuario, idIngrediente);
+        return RedirectToAction("HeladeraVirtual");
     }
 
     public IActionResult Recetas()

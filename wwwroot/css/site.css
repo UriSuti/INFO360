@@ -1537,4 +1537,6 @@ header img:hover{
     outline-offset: 2px;
 }
 
-
+.input-price{
+    max-width: 120px;
+}
