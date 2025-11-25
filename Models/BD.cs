@@ -8,7 +8,7 @@ namespace Info360.Models;
 
 public static class BD
 {
-    private static string _connectionString = @"Server=localhost\SQLEXPRESS;DataBase=Info360;Integrated Security=True;TrustServerCertificate=True;";
+    private static string _connectionString = @"Server=localhost;DataBase=Info360;Integrated Security=True;TrustServerCertificate=True;";
 
     public static Usuario buscarUsuario(string email, string contraseña)
     {
