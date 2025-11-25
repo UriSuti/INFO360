@@ -5,7 +5,26 @@
 <main class="container main-section">
   <div class="buscador">
     <input id="searchReceta" type="text" placeholder="Buscar receta" aria-label="Buscar receta" />
-    <button id="btnFiltrar" class="btn-filtrar" aria-label="Filtrar"><i class="bi bi-funnel"></i> Filtrar</button>
+
+    <div class="btn-group dropup">
+    
+      <form id="form" method="POST" action='@Url.Action("Recetas", "Home")' enctype="multipart/form-data">
+
+
+        <a type="button" class="btn btn-secondary dropdown-toggle" action='@Url.Action("SubirReceta", "Home")' data-bs-toggle="dropdown" aria-expanded="false"></a>
+
+        <ul class="dropdown-menu">
+          @foreach(Ingrediente ing in ViewBag.ingredientes) {
+              <input type="checkbox" id="@ing.id" name="ingredientes" value="@ing.id" />
+              <label for="scales">@ing.medida</label>
+              <br>
+          }
+        </ul>
+        
+        <input type="submit" id="btnFiltrar" class="btn-filtrar" value="filtrar" aria-label="Filtrar">
+      </form>
+    </div>
+
   </div>
 
   <section class="recetasExplorer">
@@ -21,7 +40,6 @@
         <div class="receta-actions">
           <button class="btn-icon" title="Favorita" aria-label="Marcar favorita"><i class="bi bi-heart"></i></button>
           <button class="btn-icon" title="Compartir" aria-label="Compartir receta"><i class="bi bi-share"></i></button>
-            <!-- Open modal to add recipe to calendar -->
             <button type="button" class="btn-agregar add-to-calendar" data-name="@receta.nombre">Añadir</button>
         </div>
       </article>
@@ -32,14 +50,12 @@
   </section>
 </main>
 
-  <!-- Hidden form used to submit to AgregarCalendarioyReceta -->
   <form id="addToCalendarForm" method="post" action='@Url.Action("AgregarCalendarioyReceta", "Home")' style="display:none;">
       <input type="hidden" name="fecha" id="cal_fecha" />
       <input type="hidden" name="momento" id="cal_momento" />
       <input type="hidden" name="nombreReceta" id="cal_nombre" />
   </form>
 
-  <!-- Simple modal for selecting date and momento -->
   <div id="calendarModal" class="modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); align-items:center; justify-content:center; z-index:1050;">
     <div style="background:#fff; padding:18px; border-radius:8px; width:340px; max-width:94%; box-shadow:0 12px 40px rgba(0,0,0,0.25);">
       <h4 style="margin:0 0 8px 0;">Agregar al calendario</h4>

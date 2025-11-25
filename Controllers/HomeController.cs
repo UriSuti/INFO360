@@ -85,7 +85,6 @@ public class HomeController : Controller
         Usuario? usuario = BD.buscarUsuario(email, contraseña);
         if (usuario == null)
         {
-            // login failed - show login again
             return View("Login");
         }
         HttpContext.Session.SetString("Usuario", Objeto.ObjectToString<Usuario>(usuario));
@@ -117,15 +116,12 @@ public class HomeController : Controller
         int idIngredienteFinal;
         if (idIngredienteExistente.HasValue && idIngredienteExistente.Value > 0)
         {
-            // use existing ingredient
             idIngredienteFinal = idIngredienteExistente.Value;
         }
         else
         {
-            // create new ingredient - require medida and precio
-            if (string.IsNullOrWhiteSpace(medida) || !precio.HasValue)
+            if (string.IsNullOrEmpty(medida) || !precio.HasValue)
             {
-                // invalid submission, redirect back
                 return RedirectToAction("HeladeraVirtual");
             }
             idIngredienteFinal = BD.agregarIngredienteReturnId(medida, precio.Value);
@@ -148,8 +144,17 @@ public class HomeController : Controller
 
     public IActionResult Recetas()
     {
+        ViewBag.ingredientes = BD.buscarIngredientes();
         ViewBag.recetas = BD.buscarRecetas();
         return View("recetas");
+    }  
+
+    [HttpPost]
+    public IActionResult Recetas(int[] ingredientes)
+    {
+        ViewBag.ingredientes = BD.buscarIngredientes();
+        ViewBag.recetas = BD.buscarRecetas();
+        return View("verCalendario");
     }  
     
     public IActionResult RecetasFav()
@@ -189,7 +194,6 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult SubirReceta(string titulo, string resumen, IFormFile? imagen, string? ingredientes)
     {
-        // Save uploaded image (if any) and build url
         string urlFoto = string.Empty;
         if (imagen != null && imagen.Length > 0)
         {
