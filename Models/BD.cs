@@ -105,7 +105,7 @@ public static class BD
     {
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            string query = "SELECT id, medida, precio FROM Ingredientes";
+            string query = "SELECT * FROM Ingredientes";
             return connection.Query<Ingrediente>(query).ToList();
         }
     }
@@ -177,7 +177,7 @@ public static class BD
         List<Ingrediente> ingredientes = new List<Ingrediente>();
         using(SqlConnection connection = new SqlConnection(_connectionString))
         {
-            string query = @"SELECT i.id, i.medida, i.precio
+            string query = @"SELECT *
                                 FROM Ingredientes i
                                 INNER JOIN Heladeras h ON i.id = h.idIngrediente
                                 WHERE h.idUsuario = @pIdUsuario";
@@ -186,12 +186,12 @@ public static class BD
         return ingredientes;
     }
 
-    public static int agregarIngredienteReturnId(string medida, double precio)
+    public static int agregarIngredienteReturnId(string medida, double precio, string nombre)
     {
         using(SqlConnection connection = new SqlConnection(_connectionString))
         {
-            string query = "INSERT INTO Ingredientes (medida, precio) VALUES (@pMedida, @pPrecio); SELECT CAST(SCOPE_IDENTITY() as int);";
-            int id = connection.QuerySingle<int>(query, new { pMedida = medida, pPrecio = precio });
+            string query = "INSERT INTO Ingredientes (nombre, medida, precio) VALUES (@pNombre, @pMedida, @pPrecio); SELECT CAST(SCOPE_IDENTITY() as int);";
+            int id = connection.QuerySingle<int>(query, new {pMedida = medida, pPrecio = precio, pNombre = nombre });
             return id;
         }
     }

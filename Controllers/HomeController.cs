@@ -106,26 +106,13 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public IActionResult AgregarHeladera(int? idIngredienteExistente, string? medida, double? precio)
+    public IActionResult AgregarHeladera(string nombre, string medida, double precio)
     {
         Usuario? usuario = GetUsuarioFromSession();
         if (usuario == null) return RedirectToAction("Index");
 
         int idUsuario = BD.buscarIdUsuario(usuario.email, usuario.contraseña);
-
-        int idIngredienteFinal;
-        if (idIngredienteExistente.HasValue && idIngredienteExistente.Value > 0)
-        {
-            idIngredienteFinal = idIngredienteExistente.Value;
-        }
-        else
-        {
-            if (string.IsNullOrEmpty(medida) || !precio.HasValue)
-            {
-                return RedirectToAction("HeladeraVirtual");
-            }
-            idIngredienteFinal = BD.agregarIngredienteReturnId(medida, precio.Value);
-        }
+        int idIngredienteFinal = BD.agregarIngredienteReturnId(medida, precio, nombre);
 
         BD.agregarIngredienteHeladera(idUsuario, idIngredienteFinal);
         return RedirectToAction("HeladeraVirtual");
