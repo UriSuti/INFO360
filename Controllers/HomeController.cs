@@ -140,7 +140,7 @@ public class HomeController : Controller
     public IActionResult Recetas(int[] ingredientes)
     {
         ViewBag.ingredientes = BD.buscarIngredientes();
-        ViewBag.recetas = BD.buscarRecetas();
+        ViewBag.recetas = BD.buscarRecetasFiltradas(ingredientes);
         return View("verCalendario");
     }  
     

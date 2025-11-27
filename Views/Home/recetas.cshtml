@@ -10,18 +10,17 @@
     
       <form id="form" method="POST" action='@Url.Action("Recetas", "Home")' enctype="multipart/form-data">
 
+        <a type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></a>
 
-        <a type="button" class="btn btn-secondary dropdown-toggle" action='@Url.Action("SubirReceta", "Home")' data-bs-toggle="dropdown" aria-expanded="false"></a>
-
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu" style="width:250px;">
           @foreach(Ingrediente ing in ViewBag.ingredientes) {
               <input type="checkbox" id="@ing.id" name="ingredientes" value="@ing.id" />
-              <label for="scales">@ing.medida</label>
+              <label for="scales">@ing.nombre</label>
               <br>
           }
         </ul>
         
-        <input type="submit" id="btnFiltrar" class="btn-filtrar" value="filtrar" aria-label="Filtrar">
+        <input type="submit" id="btnFiltrar" class="btn-filtrar" value="filtrar" aria-label="Filtrar"/>
       </form>
     </div>
 
@@ -137,7 +136,6 @@
       if(filterWithImage) filterWithImage.addEventListener('change', applyFilters);
       if(clearFilters) clearFilters.addEventListener('click', function(e){ e.preventDefault(); input.value=''; filterTitleOnly.checked=false; filterWithImage.checked=false; applyFilters(); });
 
-      if(btnFiltrar) btnFiltrar.addEventListener('click', function(e){ e.preventDefault(); if(filterPanel.style.display === 'none'){ filterPanel.style.display = 'block'; filterPanel.querySelector('input,button').focus(); } else { filterPanel.style.display = 'none'; } });
 
     // run once on load to set counter
     applyFilters();

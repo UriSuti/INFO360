@@ -91,6 +91,17 @@ public static class BD
         return recetas;
     }
 
+    public static List<Receta> buscarRecetasFiltradas(int[] ingredientes)
+    {
+        List<Receta> recetas = new List<Receta>();
+        using(SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            string query = "";
+            recetas = connection.Query<Receta>(query).ToList();
+        }
+        return recetas;
+    }
+
     public static int agregarReceta(string nombre, string descripcion, string urlFoto)
     {
         using (SqlConnection connection = new SqlConnection(_connectionString))
