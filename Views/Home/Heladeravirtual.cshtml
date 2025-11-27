@@ -14,7 +14,7 @@
             @foreach (Ingrediente ingrediente in ViewBag.Heladera)
             {
                 <div class="item" data-id="@ingrediente.id">
-                    <span class="item-text">@ingrediente.medida</span>
+                    <span class="item-text">@ingrediente.nombre</span>
                     <span class="precio">$@ingrediente.precio</span>
                     <form method="post" asp-action="EliminarHeladera" asp-controller="Home" class="del-form">
                         <input type="hidden" name="idIngrediente" value="@ingrediente.id" />

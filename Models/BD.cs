@@ -93,17 +93,20 @@ public static class BD
 
     public static List<Receta> buscarRecetasFiltradas(int[] ingredientes)
     {
-        List<Receta> recetas = new List<Receta>();
-        using(SqlConnection connection = new SqlConnection(_connectionString))
+        string WHERE = "IN (";
+        foreach(int id in ingredientes)
         {
-            foreach (int ingrediente in ingredientes)
-            {
-                string query = "SELECT nombre, medida, precio FROM Recetas INNER JOIN RecetasIngredientes ON Recetas.id = RecetasIngredientes.idReceta WHERE RecetasIngredientes.idIngrediente = @pIdIngrediente";
-                recetas = connection.Query<Receta>(query).ToList();
-            }
+            WHERE += id + ",";
         }
-        return recetas;
+        WHERE = WHERE.Substring(0, WHERE.Length-1) + ")";
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            string query = " SELECT r.id, r.nombre FROM Recetas r INNER JOIN RecetasIngredientes ri ON r.id = ri.idReceta WHERE ri.idIngrediente " + WHERE + " GROUP BY r.id, r.nombre HAVING COUNT(DISTINCT ri.idIngrediente) = " +ingredientes.Length;
+
+            return connection.Query<Receta>(query).ToList();
+        }
     }
+
 
     public static int agregarReceta(string nombre, string descripcion, string urlFoto)
     {

@@ -21,7 +21,7 @@
         <select id="ingredienteSelect" class="form-select" style="flex:1;">
           <option value="">-- seleccionar ingrediente --</option>
             @foreach(Ingrediente ing in ViewBag.ingredientes) {
-                <option value="@ing.id">@ing.medida (@String.Format("${0:0.##}", ing.precio))</option>
+                <option value="@ing.id">@ing.nombre (@String.Format("${0:0.##}", ing.precio))</option>
             }
         
         </select>

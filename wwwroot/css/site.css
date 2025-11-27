@@ -618,6 +618,19 @@
 }
 
 /* RECETAS */
+
+input#btnFiltrar {
+    border: none;
+    background-color: #6c757d;
+    padding: 0.375rem 0.75rem ;
+    color: #fff;
+    border-radius: 5px;
+}
+
+ul.dropdown-menu.show {
+    padding: 5%;
+}
+
 .buscador{
     max-width: 980px;
     margin: 28px auto 12px;

@@ -12,4 +12,8 @@ public class Receta
         this.descripcion = descripcion;
         this.urlFoto = urlFoto;
     }
+    public Receta()
+    {
+        
+    }
 }

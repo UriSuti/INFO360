@@ -106,13 +106,17 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public IActionResult AgregarHeladera(string nombre, string medida, double precio)
+    public IActionResult AgregarHeladera(int idIngredienteExistente, string nombre, string medida, double precio)
     {
         Usuario? usuario = GetUsuarioFromSession();
         if (usuario == null) return RedirectToAction("Index");
+        int idIngredienteFinal = idIngredienteExistente;
+        if(idIngredienteExistente == 0){
+            idIngredienteFinal = BD.agregarIngredienteReturnId(medida, precio, nombre);
+
+        }
 
         int idUsuario = BD.buscarIdUsuario(usuario.email, usuario.contraseña);
-        int idIngredienteFinal = BD.agregarIngredienteReturnId(medida, precio, nombre);
 
         BD.agregarIngredienteHeladera(idUsuario, idIngredienteFinal);
         return RedirectToAction("HeladeraVirtual");
@@ -131,7 +135,12 @@ public class HomeController : Controller
 
     public IActionResult Recetas()
     {
-        ViewBag.ingredientes = BD.buscarIngredientes();
+        Usuario? usuario = GetUsuarioFromSession();
+        if (usuario == null) return RedirectToAction("Index");
+
+        int idUsuario = BD.buscarIdUsuario(usuario.email, usuario.contraseña);
+        ViewBag.ingredientes = BD.buscarHeladera(idUsuario);
+
         ViewBag.recetas = BD.buscarRecetas();
         return View("recetas");
     }  
@@ -140,8 +149,14 @@ public class HomeController : Controller
     public IActionResult Recetas(int[] ingredientes)
     {
         ViewBag.ingredientes = BD.buscarIngredientes();
-        ViewBag.recetas = BD.buscarRecetasFiltradas(ingredientes);
-        return View("verCalendario");
+        if(ingredientes.Length != 0){
+            ViewBag.recetas = BD.buscarRecetasFiltradas(ingredientes);
+        }
+        else{
+            ViewBag.recetas = BD.buscarRecetas();
+        }
+        
+        return View("recetas");
     }  
     
     public IActionResult RecetasFav()
