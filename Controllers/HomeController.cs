@@ -148,7 +148,12 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult Recetas(int[] ingredientes)
     {
-        ViewBag.ingredientes = BD.buscarIngredientes();
+        Usuario? usuario = GetUsuarioFromSession();
+        if (usuario == null) return RedirectToAction("Index");
+
+        int idUsuario = BD.buscarIdUsuario(usuario.email, usuario.contraseña);
+        ViewBag.ingredientes = BD.buscarHeladera(idUsuario);
+
         if(ingredientes.Length != 0){
             ViewBag.recetas = BD.buscarRecetasFiltradas(ingredientes);
         }
