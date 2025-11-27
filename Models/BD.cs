@@ -96,8 +96,11 @@ public static class BD
         List<Receta> recetas = new List<Receta>();
         using(SqlConnection connection = new SqlConnection(_connectionString))
         {
-            string query = "";
-            recetas = connection.Query<Receta>(query).ToList();
+            foreach (int ingrediente in ingredientes)
+            {
+                string query = "SELECT nombre, medida, precio FROM Recetas INNER JOIN RecetasIngredientes ON Recetas.id = RecetasIngredientes.idReceta WHERE RecetasIngredientes.idIngrediente = @pIdIngrediente";
+                recetas = connection.Query<Receta>(query).ToList();
+            }
         }
         return recetas;
     }
