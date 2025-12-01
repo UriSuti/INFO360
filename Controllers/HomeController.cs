@@ -111,15 +111,31 @@ public class HomeController : Controller
         Usuario? usuario = GetUsuarioFromSession();
         if (usuario == null) return RedirectToAction("Index");
         int idIngredienteFinal = idIngredienteExistente;
+        int idUsuario = BD.buscarIdUsuario(usuario.email, usuario.contraseña);
+
         if(idIngredienteExistente == 0){
-            idIngredienteFinal = BD.agregarIngredienteReturnId(medida, precio, nombre);
+            if(BD.buscarIngredienteHeladeraNombre(idUsuario, nombre) == idUsuario){
+                return RedirectToAction("HeladeraVirtual");
+            }
+            else{
+                idIngredienteFinal = BD.agregarIngredienteReturnId(medida, precio, nombre);
+
+            }
+        }
+        List<Ingrediente> heladera = BD.buscarHeladera(idUsuario);
+        
+        if(BD.buscarIngredienteHeladera(idUsuario, idIngredienteFinal) == idUsuario){
+
+            return RedirectToAction("HeladeraVirtual");
+
+        }
+        else{
+            BD.agregarIngredienteHeladera(idUsuario, idIngredienteFinal);
+            return RedirectToAction("HeladeraVirtual");
 
         }
 
-        int idUsuario = BD.buscarIdUsuario(usuario.email, usuario.contraseña);
-
-        BD.agregarIngredienteHeladera(idUsuario, idIngredienteFinal);
-        return RedirectToAction("HeladeraVirtual");
+        
     }
 
     [HttpPost]

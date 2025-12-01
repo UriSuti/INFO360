@@ -16,7 +16,7 @@
                 <div class="item" data-id="@ingrediente.id">
                     <span class="item-text">@ingrediente.nombre</span>
                     <span class="precio">$@ingrediente.precio</span>
-                    <form method="post" asp-action="EliminarHeladera" asp-controller="Home" class="del-form">
+                    <form method="post" action='@Url.Action("EliminarHeladera", "Home")' class="del-form">
                         <input type="hidden" name="idIngrediente" value="@ingrediente.id" />
                         <button type="submit" class="del-btn">🗑️</button>
                     </form>

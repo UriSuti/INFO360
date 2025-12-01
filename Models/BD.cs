@@ -157,6 +157,16 @@ public static class BD
         }
         return id;
     }
+    public static Ingrediente buscarIngrediente(int id)
+    {
+        Ingrediente ing = new Ingrediente();
+        using(SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            string query = "SELECT * FROM Ingredientes WHERE id = @pId";
+            ing = connection.QueryFirstOrDefault<Ingrediente>(query, new { pId = id });
+        }
+        return ing;
+    }
 
     public static int buscarIdCalendario(Calendario calendario)
     {
@@ -187,6 +197,27 @@ public static class BD
             receta = connection.QueryFirstOrDefault<Receta>(query, new { @pNombre = nombre });
         }
         return receta;
+    }
+    public static int buscarIngredienteHeladera(int idUsuario, int idIngrediente)
+    {
+        int usuario;
+        using(SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            string query = "SELECT idUsuario FROM Heladeras WHERE Heladeras.idIngrediente = @pIngrediente AND Heladeras.idUsuario = @pUsuario";
+            usuario = connection.QueryFirstOrDefault<int>(query, new { @pIngrediente = idIngrediente, @pUsuario = idUsuario });
+        }
+        return usuario;
+    }
+
+    public static int buscarIngredienteHeladeraNombre(int idUsuario, string nombre)
+    {
+        int usuario;
+        using(SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            string query = "SELECT idUsuario, Ingredientes.nombre FROM Heladeras INNER JOIN Ingredientes ON Ingredientes.id = Heladeras.idIngrediente WHERE Ingredientes.nombre = @pNombre AND Heladeras.idUsuario = @pUsuario";
+            usuario = connection.QueryFirstOrDefault<int>(query, new { @pNombre = nombre, @pUsuario = idUsuario });
+        }
+        return usuario;
     }
 
     public static List<Ingrediente> buscarHeladera(int idUsuario)
