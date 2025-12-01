@@ -194,10 +194,7 @@ public static class BD
         List<Ingrediente> ingredientes = new List<Ingrediente>();
         using(SqlConnection connection = new SqlConnection(_connectionString))
         {
-            string query = @"SELECT *
-                                FROM Ingredientes i
-                                INNER JOIN Heladeras h ON i.id = h.idIngrediente
-                                WHERE h.idUsuario = @pIdUsuario";
+            string query = "SELECT Ingredientes.id, Ingredientes.medida, Ingredientes.nombre, Ingredientes.precio FROM Ingredientes INNER JOIN Heladeras ON ingredientes.id = Heladeras.idIngrediente WHERE Heladeras.idUsuario = @pIdUsuario";
             ingredientes = connection.Query<Ingrediente>(query, new { pIdUsuario = idUsuario }).ToList();
         }
         return ingredientes;
