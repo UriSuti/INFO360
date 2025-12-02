@@ -92,11 +92,15 @@ public class HomeController : Controller
         return View("Index");
     }
 
-    public IActionResult HeladeraVirtual()
+    public IActionResult HeladeraVirtual(string error = "")
     {
         Usuario? usuario = GetUsuarioFromSession();
         if (usuario == null) return RedirectToAction("Index");
+        if(error != ""){
 
+            ViewBag.error = error;
+
+        }
         int idUsuario = BD.buscarIdUsuario(usuario.email, usuario.contraseña);
         List<Ingrediente> items = BD.buscarHeladera(idUsuario);
         ViewBag.ingredientes = BD.buscarIngredientes();
@@ -115,7 +119,7 @@ public class HomeController : Controller
 
         if(idIngredienteExistente == 0){
             if(BD.buscarIngredienteHeladeraNombre(idUsuario, nombre) == idUsuario){
-                return RedirectToAction("HeladeraVirtual");
+                return RedirectToAction("HeladeraVirtual", new{error = "Ese ingrediente ya existe"});
             }
             else{
                 idIngredienteFinal = BD.agregarIngredienteReturnId(medida, precio, nombre);
@@ -125,8 +129,8 @@ public class HomeController : Controller
         List<Ingrediente> heladera = BD.buscarHeladera(idUsuario);
         
         if(BD.buscarIngredienteHeladera(idUsuario, idIngredienteFinal) == idUsuario){
-
-            return RedirectToAction("HeladeraVirtual");
+            
+            return RedirectToAction("HeladeraVirtual", new{error = "Ese ingrediente ya existe"});
 
         }
         else{
@@ -250,9 +254,32 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public IActionResult buscarRecetasIngrediente(int idIngrediente)
+    public IActionResult verRecetasIngredientes(int idIngrediente)
     {
-        List<Receta> recetas = BD.buscarRecetasFiltradas()
+        Usuario? usuario = GetUsuarioFromSession();
+        if (usuario == null) return RedirectToAction("Index");
+        int idUsuario = BD.buscarIdUsuario(usuario.email, usuario.contraseña);
+        ViewBag.ingredientes = BD.buscarHeladera(idUsuario);
+        List<Receta> recetas = BD.buscarRecetasFiltradas(new int[] {idIngrediente});
+        ViewBag.recetas = recetas;
+        return View("recetas");
+    }
+
+    [HttpPost]
+    public IActionResult verReceta(string nombreReceta)
+    {
+        Usuario? usuario = GetUsuarioFromSession();
+        if (usuario == null) return RedirectToAction("Index");
+
+        int idUsuario = BD.buscarIdUsuario(usuario.email, usuario.contraseña);
+        ViewBag.ingredientes = BD.buscarHeladera(idUsuario);
+        
+        List<Receta> recetas = new List<Receta>();
+        recetas.Add(BD.buscarReceta(nombreReceta));
+        ViewBag.recetas = recetas;
+
+        return View("recetas");
+        
     }
 
 }

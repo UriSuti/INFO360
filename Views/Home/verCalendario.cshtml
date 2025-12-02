@@ -37,26 +37,26 @@
       <div class="mc-accordion__content">
         <ul class="mc-recipes">
 
-        @foreach(CalendariosxRecetas CalendariosxRecetas in @ViewBag.recetas){
-          @if(CalendariosxRecetas.momento == "Desayuno" && CalendariosxRecetas.fecha == ViewBag.Fecha){
+        @foreach(CalendariosxRecetas CalendariossxRecetas in @ViewBag.recetas){
+          @if(CalendariossxRecetas.momento == "Desayuno" && CalendariossxRecetas.fecha == ViewBag.Fecha){
             <li class="mc-recipe">
               <div class="mc-recipe__info">
-                <strong>@CalendariosxRecetas.receta.nombre</strong>
-                <small>@CalendariosxRecetas.receta.descripcion</small>
+                <strong>@CalendariossxRecetas.receta.nombre</strong>
+                <small>@CalendariossxRecetas.receta.descripcion</small>
               </div>
               <div class="mc-recipe__actions">
 
-                <a class="btn btn-link btn-sm" href='@Url.Action("login")'>Ver</a>
-                <button class="btn btn-outline-danger btn-sm">Quitar</button>
+              <form method="post" action='@Url.Action("verReceta", "Home")' class="add-box" enctype="multipart/form-data">
+
+                <input type="hidden" value="@CalendariossxRecetas.receta.nombre" name="nombreReceta"/>
+                <button type="submit" class="btn-add">+</button>
+              </form>
               </div>
             </li>
           }
 
         }
         </ul>
-        <div class="mc-add">
-          <button href='@Url.Action("login")'' class="btn btn-success w-100">+ Agregar receta</button>
-        </div>
       </div>
 
     </details>
@@ -72,27 +72,27 @@
       <div class="mc-accordion__content">
         <ul class="mc-recipes">
 
-        @foreach(CalendariosxRecetas CalendariosxRecetas in @ViewBag.recetas){
+        @foreach(CalendariosxRecetas CalendariossxRecetas in @ViewBag.recetas){
           
-          @if(CalendariosxRecetas.momento == "Almuerzo" && CalendariosxRecetas.fecha == ViewBag.Fecha){
+          @if(CalendariossxRecetas.momento == "Almuerzo" && CalendariossxRecetas.fecha == ViewBag.Fecha){
             <li class="mc-recipe">
               <div class="mc-recipe__info">
-                <strong>@CalendariosxRecetas.receta.nombre</strong>
-                <small>@CalendariosxRecetas.receta.descripcion</small>
+                <strong>@CalendariossxRecetas.receta.nombre</strong>
+                <small>@CalendariossxRecetas.receta.descripcion</small>
               </div>
               <div class="mc-recipe__actions">
 
-                <a class="btn btn-link btn-sm" href='@Url.Action("login")'>Ver</a>
-                <button class="btn btn-outline-danger btn-sm">Quitar</button>
-              </div>
+              <form method="post" action='@Url.Action("verReceta", "Home")' class="add-box">
+
+                <input type="hidden" value="@CalendariossxRecetas.receta.nombre" name="nombreReceta"/>
+                <button type="submit" class="btn-add">+</button>
+              </form>
+            </div>
             </li>
           }
 
         }
         </ul>
-        <div class="mc-add">
-          <button class="btn btn-success w-100">+ Agregar receta</button>
-        </div>
       </div>
     </details>
 
@@ -114,18 +114,17 @@
                 <small>@CalendariosxRecetas.receta.descripcion</small>
               </div>
               <div class="mc-recipe__actions">
+              <form method="post" action='@Url.Action("verReceta", "Home")' class="add-box">
 
-                <a class="btn btn-link btn-sm" href='@Url.Action("login")'>Ver</a>
-                <button class="btn btn-outline-danger btn-sm">Quitar</button>
-              </div>
+                <input type="hidden" value="@CalendariosxRecetas.receta"/>
+                <button type="submit" class="btn-add">+</button>
+              </form>              </div>
             </li>
           }
 
         }
         </ul>
-        <div class="mc-add">
-          <button class="btn btn-success w-100">+ Agregar receta</button>
-        </div>
+
       </div>
     </details>
 
@@ -148,22 +147,16 @@
               </div>
               <div class="mc-recipe__actions">
 
-                <a class="btn btn-link btn-sm" href='@Url.Action("login")'>Ver</a>
-                <button class="btn btn-outline-danger btn-sm">Quitar</button>
-              </div>
+              <form method="post" action='@Url.Action("verReceta", "Home")' class="add-box">
+
+                <input type="hidden" value="@CalendariosxRecetas.receta"/>
+                <button type="submit" class="btn-add">+</button>
+              </form>              </div>
             </li>
           }
 
         }
         </ul>
-        <!-- <form id="form" method="POST" action='@Url.Action("AgregarCalendarioyReceta", "Home")' enctype="multipart/form-data">
-          <input type="date" id="fecha" name="fecha" />
-          <input type="text" id="momento" name="momento" />
-          <input type="text" id=""
-          <div class="mc-add">
-            <button class="btn btn-success w-100" type="submit">+ Agregar receta</button>
-          </div>
-        </form> -->
       </div>
     </details>
   </aside>

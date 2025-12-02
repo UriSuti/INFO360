@@ -198,6 +198,17 @@ public static class BD
         }
         return receta;
     }
+    
+    public static Receta buscarRecetaId(int id)
+    {
+        Receta receta;
+        using(SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            string query = "SELECT nombre, descripcion, urlFoto FROM Recetas WHERE id = @pId";
+            receta = connection.QueryFirstOrDefault<Receta>(query, new { @pId = id });
+        }
+        return receta;
+    }
     public static int buscarIngredienteHeladera(int idUsuario, int idIngrediente)
     {
         int usuario;

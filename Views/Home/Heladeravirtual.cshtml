@@ -9,6 +9,8 @@
 
     <h2 class="titulo">Heladera Virtual</h2>
     <p class="sub">Organizá lo que tenés en casa y tachá cuando ya no está más</p>
+    <p class="sub">@ViewBag.error</p>
+
 
     <div class="items-list">
             @foreach (Ingrediente ingrediente in ViewBag.Heladera)
@@ -16,7 +18,7 @@
                 <div class="item" data-id="@ingrediente.id">
                     <span class="item-text">@ingrediente.nombre</span>
                     <span class="precio">$@ingrediente.precio</span>
-                    <form method="post" action='@Url.Action("verRecetasIngrediente", "Home")' class="del-form">
+                    <form method="post" action='@Url.Action("verRecetasIngredientes", "Home")' class="del-form">
                         <input type="hidden" name="idIngrediente" value="@ingrediente.id" />
                         <button type="submit" class="del-btn">+</button>
                     </form>
