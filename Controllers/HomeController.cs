@@ -249,4 +249,10 @@ public class HomeController : Controller
         return RedirectToAction("Recetas");
     }
 
+    [HttpPost]
+    public IActionResult buscarRecetasIngrediente(int idIngrediente)
+    {
+        List<Receta> recetas = BD.buscarRecetasFiltradas()
+    }
+
 }
