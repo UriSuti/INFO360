@@ -26,6 +26,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        HttpContext.Session.Clear();
         return View("Login");
     }
 
